@@ -3,6 +3,7 @@ namespace Codess\CodessGitHubIssueCreator;
 
 use Codess\CodessGitHubIssueCreator\config\PostTypes;
 use Codess\CodessGitHubIssueCreator\admin\Admin;
+use WP_Admin_Bar;
 
 /**
  * The file that defines the core plugin class
@@ -55,7 +56,8 @@ class Plugin {
 		$this->define_admin_hooks();
 		$this->define_enqueue_hooks();
 
-	}
+
+    }
 
 	/**
 	 * Define the locale for this plugin for internationalization.
@@ -93,8 +95,11 @@ class Plugin {
 		$plugin_admin = new Admin( $this->get_plugin_name(), $this->get_version() );
 
         // Define admin related hooks
-		//$this->loader->add_action( 'before_delete_post', $plugin_admin, 'delete_something', 10, 2 );
-	}
+        $this->loader->add_action('admin_bar_menu', $this,'admin_bar_item', 500);
+        $this->loader->add_action('admin_footer', $this,'add_admin_bar_modal');
+        $this->loader->add_action('admin_menu', $this, 'codess_add_admin_menu');
+
+    }
 
     /**
      * Register all hooks related to assets.
@@ -106,6 +111,7 @@ class Plugin {
 
         $this->loader->add_action( 'enqueue_scripts', $plugin_enqueue, 'enqueue_public_assets' );
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_enqueue, 'enqueue_admin_assets' );
+
     }
 
 	/**
@@ -141,4 +147,88 @@ class Plugin {
     {
 		return $this->version;
 	}
+
+
+    /**
+     * @param WP_Admin_Bar $admin_bar
+     * @return void
+     */
+    function admin_bar_item(WP_Admin_Bar $admin_bar): void {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+        $admin_bar->add_menu(array(
+            'id' => 'codess-github-issue-creator-adminbar-btn',
+            'title' => __('Report Issue', 'codess-github-issue-creator'),
+            'href' => '#', // no redirect
+            'meta' => [
+                'title' => __('Report Issue', 'codess-github-issue-creator'),
+            ]
+        ));
+    }
+
+
+    /**
+     * @return void
+     */
+    function add_admin_bar_modal(): void {
+        ?>
+        <dialog id="codess-issue-modal" >
+            <form class="modal-form" action="">
+                <div class="modal-content codess-modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header d-flex justify-content-between">
+                        <h5 class="modal-title" id="modalTitle"><?= __('Report Issue', 'codess-github-issue-creator') ?></h5>
+                        <button type="button" class="btn-close codess-close"></button>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <p class="text-muted"><?= __('Fill out this form to report a new GitHub Issue to Codess.', 'codess-github-issue-creator') ?></p>
+
+                        <div class="mb-3">
+                            <label for="issue_title" class="form-label"><?= __('Bug Report Title', 'codess-github-issue-creator') ?></label>
+                            <input id="issue_title" type="text" name="title" class="form-control" placeholder="Enter the issue title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="issue_description" class="form-label"><?= __('Description', 'codess-github-issue-creator') ?></label>
+                            <textarea id="issue_description" name="description" class="form-control" rows="4" placeholder="Describe the issue..." required></textarea>
+                        </div>
+
+                        <!-- Hidden Inputs -->
+                        <input id="issue_operating_system" type="hidden" name="operating_system" value="">
+                        <input id="issue_browser" type="hidden" name="browser" value="">
+                        <input id="issue_view_port_size" type="hidden" name="view_port_size" value="">
+                        <input id="issue_wp_user_name" type="hidden" name="wp_user_name" value="">
+                        <input id="issue_wp_user_email" type="hidden" name="wp_user_email" value="">
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><?= __('Report Issue', 'codess-github-issue-creator') ?></button>
+                    </div>
+
+                </div>
+            </form>
+        </dialog>
+        <?php
+    }
+
+
+    function codess_add_admin_menu(): void {
+
+        $git_hub_issue = new GitHubIssue();
+
+        add_menu_page(
+            __('Reported Issues', 'codess-github-issue-creator'), // Page title
+            __('Reported Issues', 'codess-github-issue-creator'), // Menu title
+            'manage_options', // Capability (only for admins)
+            'reported-issues',// Menu slug
+            array($git_hub_issue, 'codess_backend_page'),// Callback function
+            'dashicons-admin-generic', // Menu icon
+            80 // Position in the menu
+        );
+    }
 }
