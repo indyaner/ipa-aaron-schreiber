@@ -23,26 +23,25 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+    die;
 }
 
 // Include the composer autoloader
-require_once( __DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/vendor/autoload.php');
 
 use Codess\CodessGitHubIssueCreator\Activator;
 use Codess\CodessGitHubIssueCreator\Deactivator;
 use Codess\CodessGitHubIssueCreator\Plugin;
-use Github\Client;
 
 // Define the URL to the plugin root.
-define( 'CODESS_GITHUB_ISSUE_CREATOR_URL', plugin_dir_url(__FILE__) );
+define('CODESS_GITHUB_ISSUE_CREATOR_URL', plugin_dir_url(__FILE__));
 
 // Define constant for plugin name.
-define( 'CODESS_GITHUB_ISSUE_CREATOR_NAME', 'codess-github-issue-creator' );
+define('CODESS_GITHUB_ISSUE_CREATOR_NAME', 'codess-github-issue-creator');
 
 // Define constant for current plugin version.
-define( 'CODESS_GITHUB_ISSUE_CREATOR_VERSION', '1.0.0' );
+define('CODESS_GITHUB_ISSUE_CREATOR_VERSION', '1.0.0');
 
 /**
  * The code that runs during plugin activation.
@@ -50,7 +49,7 @@ define( 'CODESS_GITHUB_ISSUE_CREATOR_VERSION', '1.0.0' );
  * @return void
  */
 function activate_codess_github_issue_creator(): void {
-	Activator::activate();
+    Activator::activate();
 }
 
 /**
@@ -59,37 +58,21 @@ function activate_codess_github_issue_creator(): void {
  * @return void
  */
 function deactivate_codess_github_issue_creator(): void {
-	Deactivator::deactivate();
+    Deactivator::deactivate();
 }
 
 // Register activation and deactivation hooks
-register_activation_hook( __FILE__, 'activate_codess_github_issue_creator');
-register_deactivation_hook( __FILE__, 'deactivate_codess_github_issue_creator');
+register_activation_hook(__FILE__, 'activate_codess_github_issue_creator');
+register_deactivation_hook(__FILE__, 'deactivate_codess_github_issue_creator');
 
 /**
  * Begin plugin execution.
  *
  * @return void
  */
-function run_plugin(): void{
-	$plugin = new Plugin();
-	$plugin->run();
+function run_plugin(): void {
+    $plugin = new Plugin();
+    $plugin->run();
 }
 
 run_plugin();
-
-
-
-$token = GITHUB_PAT;
-$owner = GITHUB_OWNER;
-$repo = GITHUB_REPOSITORY;
-
-$client = new Client();
-$client->authenticate($token, '', Client::AUTH_ACCESS_TOKEN);
-
-$issues = $client->api('issue')->all($owner, $repo);
-
-foreach ($issues as $issue) {
-    echo "Issue #" . $issue['number'] . ": " . $issue['title'] . "\n";
-    echo "URL: " . $issue['html_url'] . "\n\n";
-}
