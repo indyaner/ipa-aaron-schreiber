@@ -1,0 +1,27 @@
+{
+  "name": "codess-github-issue-creator",
+  "version": "1.0.0",
+  "description": "Plugin by codess media GmbH",
+  "main": "index.php",
+  "author": "codess media GmbH",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "production": "mix --production"
+  },
+  "devDependencies": {
+    "@wordpress/eslint-plugin": "^9.2.0",
+    "eslint": "^7.32.0",
+    "jquery": "^3.6.0",
+    "laravel-mix": "^6.0.49",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
+}

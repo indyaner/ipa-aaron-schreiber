@@ -1,0 +1,13 @@
+# General
+.DS_Store
+node_modules
+vendor
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+# DDEV
+.local

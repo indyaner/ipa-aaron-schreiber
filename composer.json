@@ -1,0 +1,20 @@
+{
+    "name": "codess/codess-github-issue-creator",
+    "description": "A wordpress plugin to create github issues from codess media projects.",
+    "type": "wordpress-plugin",
+    "license": "Copyright",
+    "autoload": {
+        "psr-4": {
+            "Codess\\CodessGitHubIssueCreator\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "codess media GmbH",
+            "email": "technik@codess.media"
+        }
+    ],
+    "require": {
+        "johnbillion/extended-cpts": "^5.0"
+    }
+}
