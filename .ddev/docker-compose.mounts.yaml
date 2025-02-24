@@ -1,0 +1,4 @@
+services:
+  web:
+    volumes:
+      - "${DDEV_APPROOT}:/var/www/html/.local/wp-content/plugins/${DDEV_SITENAME}"

@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * This file is read by WordPress to generate the plugin information in the plugin
  * admin area. This file also includes all dependencies used by the plugin,
@@ -32,6 +33,7 @@ require_once( __DIR__ . '/vendor/autoload.php');
 use Codess\CodessGitHubIssueCreator\Activator;
 use Codess\CodessGitHubIssueCreator\Deactivator;
 use Codess\CodessGitHubIssueCreator\Plugin;
+use Github\Client;
 
 // Define the URL to the plugin root.
 define( 'CODESS_GITHUB_ISSUE_CREATOR_URL', plugin_dir_url(__FILE__) );
@@ -75,3 +77,19 @@ function run_plugin(): void{
 }
 
 run_plugin();
+
+
+
+$token = GITHUB_PAT;
+$owner = GITHUB_OWNER;
+$repo = GITHUB_REPOSITORY;
+
+$client = new Client();
+$client->authenticate($token, '', Client::AUTH_ACCESS_TOKEN);
+
+$issues = $client->api('issue')->all($owner, $repo);
+
+foreach ($issues as $issue) {
+    echo "Issue #" . $issue['number'] . ": " . $issue['title'] . "\n";
+    echo "URL: " . $issue['html_url'] . "\n\n";
+}

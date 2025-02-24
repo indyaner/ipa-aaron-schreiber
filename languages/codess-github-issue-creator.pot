@@ -1,0 +1,113 @@
+# Copyright (C) 2025 Codess media GmbH
+# This file is distributed under the Copyright.
+msgid ""
+msgstr ""
+"Project-Id-Version: Codess GitHub Issue Creator 1.0.0-dev\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-21T14:29:55+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: codess-github-issue-creator\n"
+
+#. Plugin Name of the plugin
+#: bootstrap.php
+msgid "Codess GitHub Issue Creator"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: bootstrap.php
+msgid "https://codess.media"
+msgstr ""
+
+#. Description of the plugin
+#: bootstrap.php
+msgid "Für das erstellen und die ansicht von GitHub issues, über die GitHub API."
+msgstr ""
+
+#. Author of the plugin
+#: bootstrap.php
+msgid "Codess media GmbH"
+msgstr ""
+
+#: includes/config/PostTypes.php:21
+msgctxt "Post type plural name"
+msgid "Custom Posts"
+msgstr ""
+
+#: includes/config/PostTypes.php:22
+msgctxt "Post type singular name"
+msgid "Custom Post"
+msgstr ""
+
+#: includes/config/PostTypes.php:23
+msgctxt "Admin Menu text"
+msgid "Custom Posts"
+msgstr ""
+
+#: includes/config/PostTypes.php:24
+msgctxt "Add New on Toolbar"
+msgid "Custom Posts"
+msgstr ""
+
+#: includes/config/PostTypes.php:25
+msgid "Add Custom Post"
+msgstr ""
+
+#: includes/config/PostTypes.php:26
+msgid "Add New Custom Post"
+msgstr ""
+
+#: includes/config/PostTypes.php:27
+msgid "New Custom Post"
+msgstr ""
+
+#: includes/config/PostTypes.php:28
+msgid "Edit Custom Post"
+msgstr ""
+
+#: includes/config/PostTypes.php:29
+msgid "View Custom Post"
+msgstr ""
+
+#: includes/config/PostTypes.php:30
+msgid "All Custom Posts"
+msgstr ""
+
+#: includes/config/PostTypes.php:31
+msgid "Search Custom Posts"
+msgstr ""
+
+#: includes/config/PostTypes.php:32
+msgid "Parent Custom Post:"
+msgstr ""
+
+#: includes/config/PostTypes.php:33
+msgid "No custom pots found."
+msgstr ""
+
+#: includes/config/PostTypes.php:34
+msgid "No custom posts found in trash."
+msgstr ""
+
+#: includes/config/PostTypes.php:69
+msgid "Event"
+msgstr ""
+
+#: includes/config/PostTypes.php:70
+msgid "Events"
+msgstr ""
+
+#: includes/config/PostTypes.php:71
+msgid "events"
+msgstr ""
+
+#: assets/js/scripts.js:18
+#: assets/src/js/scripts.js:4
+msgid "Hello Aaron Schreiber!"
+msgstr ""

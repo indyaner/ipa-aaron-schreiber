@@ -13,13 +13,6 @@ use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 corepack_enable: false
-hooks:
-    pre-start:
-        - exec-host: 'mkdir -p ./.local/wp-content/plugins'
-    post-start:
-        - exec: 'ln -sfn /var/www/html /var/www/html/.local/wp-content/plugins/${DDEV_SITENAME}'
-          service: web
-
 
 # Key features of DDEV's config.yaml:
 
