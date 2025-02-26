@@ -46,5 +46,13 @@ class EnqueueAssets {
 	public function enqueue_admin_assets(): void {
         wp_enqueue_style('codess-github-issue-creator-admin-styles', CODESS_GITHUB_ISSUE_CREATOR_URL . 'assets/css/admin-styles.css', array(), $this->version );
         wp_enqueue_script('codess-github-issue-creator-admin-scripts', CODESS_GITHUB_ISSUE_CREATOR_URL . 'assets/js/admin-scripts.js', array('jquery'), $this->version, true );
+
+        $nonce = wp_create_nonce('modal_report_nonce');
+
+        wp_localize_script( 'codess-github-issue-creator-admin-scripts', 'modal_ajax', array(
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'nonce' => $nonce
+        ));
+
 	}
 }

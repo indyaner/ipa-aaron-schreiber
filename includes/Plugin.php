@@ -99,6 +99,8 @@ class Plugin {
         $this->loader->add_action('admin_footer', $this,'add_admin_bar_modal');
         $this->loader->add_action('admin_menu', $this, 'codess_add_admin_menu');
 
+        $git_hub_issue = new GitHubIssue();
+        add_action('wp_ajax_create_issue', array($git_hub_issue, 'create') );
     }
 
     /**
@@ -173,13 +175,14 @@ class Plugin {
      */
     function add_admin_bar_modal(): void {
         ?>
-        <dialog id="codess-issue-modal" >
+            <div class="bootstrap_wrapper">
+        <dialog id="codess-issue-modal">
             <form class="modal-form" action="">
                 <div class="modal-content codess-modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header d-flex justify-content-between">
-                        <h5 class="modal-title" id="modalTitle"><?= __('Report Issue', 'codess-github-issue-creator') ?></h5>
+                        <h5 class="modal-title mb-3" id="modalTitle"><?= __('Report Issue', 'codess-github-issue-creator') ?></h5>
                         <button type="button" class="btn-close codess-close"></button>
                     </div>
 
@@ -199,20 +202,19 @@ class Plugin {
 
                         <!-- Hidden Inputs -->
                         <input id="issue_operating_system" type="hidden" name="operating_system" value="">
-                        <input id="issue_browser" type="hidden" name="browser" value="">
                         <input id="issue_view_port_size" type="hidden" name="view_port_size" value="">
-                        <input id="issue_wp_user_name" type="hidden" name="wp_user_name" value="">
-                        <input id="issue_wp_user_email" type="hidden" name="wp_user_email" value="">
+                        <input id="issue_current_page_url" type="hidden" name="current_page_url" value="">
                     </div>
 
                     <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary"><?= __('Report Issue', 'codess-github-issue-creator') ?></button>
+                    <div class="modal-footer mb-3">
+                        <button type="submit" id="submit_btn_modal" class="btn btn-primary"><?= __('Report Issue', 'codess-github-issue-creator') ?></button>
                     </div>
 
                 </div>
             </form>
         </dialog>
+            </div>
         <?php
     }
 
