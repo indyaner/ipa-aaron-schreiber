@@ -1,6 +1,6 @@
 {
-    "/js/scripts.js": "/js/scripts.js",
-    "/js/admin-scripts.js": "/js/admin-scripts.js",
-    "/css/admin-styles.css": "/css/admin-styles.css",
-    "/css/styles.css": "/css/styles.css"
+    "/js/issue_create_modal.js": "/js/issue_create_modal.js",
+    "/js/issue_close_entry.js": "/js/issue_close_entry.js",
+    "/css/custom_styles.css": "/css/custom_styles.css",
+    "/css/custom_bootstrap.css": "/css/custom_bootstrap.css"
 }

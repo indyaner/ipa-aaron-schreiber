@@ -2,8 +2,8 @@
 
 namespace Codess\CodessGitHubIssueCreator;
 
-use Github\AuthMethod;
-use Github\Client;
+use Exception;
+use Github\Exception\MissingArgumentException;
 use JetBrains\PhpStorm\NoReturn;
 
 /**
@@ -11,39 +11,13 @@ use JetBrains\PhpStorm\NoReturn;
  */
 class GitHubIssue {
 
-    /**
-     * @var string
-     */
-    private string $token = GITHUB_PAT;
-
-    /**
-     * @var string
-     */
-    private string $owner = GITHUB_OWNER;
-
-    /**
-     * @var string
-     */
-    private string $repo = GITHUB_REPOSITORY;
-
-    /**
-     * @var object|Client
-     */
-    private object $client;
-
-
-    /**
-     *
-     */
-    public function __construct() {
-        $this->client = new Client();
-        $this->client->authenticate($this->token, '', AuthMethod::ACCESS_TOKEN);
-    }
 
     /**
      *
      *
      * @return void
+     * @throws MissingArgumentException
+     * @throws Exception
      */
     #[NoReturn] public function create(): void {
 
@@ -51,7 +25,7 @@ class GitHubIssue {
             // If the nonce is invalid, do not proceed
             $response = array(
                 'status' => 'error',
-                'message' => 'There was an error with the nonce security check!',
+                'message' => __('There was an error with the nonce security check!', 'codess-github-issue-creator'),
             );
 
         } else {
@@ -66,36 +40,49 @@ class GitHubIssue {
                 $email = $current_user->user_email;
 
                 $description = $_POST['description'] . "\n\n";
-                $description .= $_POST['operating_system'] . "\n";
-                $description .= $_POST['view_port_size'] . "\n";
-                $description .= __('Username:', 'codess-github-issue-creator') . ' ' . $username . "\n";
-                $description .= __('Username:', 'codess-github-issue-creator') . ' ' . $email . "\n";
+                $description .= __('Operating System and Browser:', 'codess-github-issue-creator') . ' ' . $_POST['operating_system'] . "\n";
+                $description .= __('Viewport Size:', 'codess-github-issue-creator') . ' ' . $_POST['view_port_size'] . "\n";
+                $description .= __('WP User Username:', 'codess-github-issue-creator') . ' ' . $username . "\n";
+                $description .= __('WP User Email:', 'codess-github-issue-creator') . ' ' . $email . "\n";
                 $description .= __('Called up Page Url:', 'codess-github-issue-creator') . ' ' . $_POST['current_page_url'] . "\n";
 
-                $issueData = [
-                    'title' => $_POST['title'],
-                    'body' => $description,
-                    'labels' => array(GITHUB_LABEL),
-                    'assignees' => [$this->client->api('current_user')->show()['login']],
-                ];
+                // initialize a new GitHubApi object
+                $github = new GitHubApi();
 
-                // Create the issue using the GitHub API client
-                $issue = $this->client->api('issue')->create($this->owner, $this->repo, $issueData);
-                $message = "Issue created: " . $issue['html_url']; // Show the URL of the newly created issue
+                // get the authenticated user
+                $loggedInUser = $github->getAuthenticatedUser();
 
-                $response = array(
-                    'status' => 'success',
-                    'message' => 'Issue created successfully!',
-                );
+                // check if the user is authenticated
+                if ($loggedInUser === false) {
+                    // handle the error: User authentication failed
+                    $response = [
+                        'status' => 'error',
+                        'message' => __('Authentication failed. Please try again.', 'codess-github-issue-creator'),
+                    ];
+                } else {
+                    // create the issue using the provided title, description, label, and assignees
+                    $result = $github->createIssue($_POST['title'], $description, [GITHUB_LABEL], [$loggedInUser]);
+
+                    // prepare the response based on the result of the issue creation
+                    $response = [
+                        'status' => $result ? 'success' : 'error',
+                        'message' => $result ? __('Issue created successfully!', 'codess-github-issue-creator') : __('There was an error creating the issue!', 'codess-github-issue-creator'),
+                    ];
+                }
             } else {
                 $response = array(
                     'status' => 'error',
-                    'message' => 'There was an error creating the issue!',
+                    'message' => __('There was an error creating the issue!', 'codess-github-issue-creator'),
                 );
             }
         }
 
 
+        $this->send_json($response);
+
+    }
+
+    #[NoReturn] private function send_json($response): void {
         // Send JSON response
         wp_send_json($response);
         // Always exit to prevent extra output
@@ -103,32 +90,85 @@ class GitHubIssue {
     }
 
     /**
-     * @return void
+     *
+     *
+     * @throws Exception
      */
-    public function codess_backend_page(): void { // Todo let this generate content from the github issues
+    public function close(): void {
 
+        $github = new GitHubApi();
 
-        $issues = $this->client->api('issue')->all($this->owner, $this->repo);
+        // get the authenticated user
+        $loggedInUser = $github->getAuthenticatedUser();
 
+        // check if the user is authenticated
+        if ($loggedInUser === false) {
+            // handle the error: User authentication failed
+            $response = [
+                'status' => 'error',
+                'message' => __('Authentication failed. Please try again.', 'codess-github-issue-creator'),
+            ];
+        } else {
+            $result = $github->closeIssue($_POST['issue_id']);
 
-        foreach ($issues as $issue) {
-            //var_dump($issue);
-            echo '<div class="bootstrap_wrapper">';
-            echo '<div class="container mt-4">';
-            echo '<p class="mb-2 btn btn-primary">Issue #' . $issue['number'] . ': ' . $issue['title'] . '</p>';
-            echo '<p class="mb-2">Description: ' . $issue['body'] . '</p>';
-            echo '</div>';
+            $response = [
+                'status' => $result ? 'success' : 'error',
+                'message' => $result ? __('Issue closed successfully!', 'codess-github-issue-creator') : __('There was an error closing the issue!', 'codess-github-issue-creator'),
+            ];
         }
 
+        $this->send_json($response);
+    }
 
-        ?>
-        <div class="wrap">
-            <h1><?= __('Reported Issues', 'codess-github-issue-creator'); ?></h1>
+    /**
+     * Renders the backend page for displaying reported issues from GitHub.
+     *
+     * This function fetches open issues from GitHub based on the specified label and displays
+     * them in a responsive grid format. Each issue includes a title, body, and a delete button to remove it.
+     *
+     * @return void
+     * @throws Exception
+     */
+    public function codess_backend_page(): void {
+        $github = new GitHubApi();
+        $issues = $github->getOpenIssues(GITHUB_LABEL); // Fetch issues with specific label
+        if (current_user_can('manage_github_api_issues')) {
+            ?>
+            <div class="wrap bootstrap_wrapper">
+                <h1><?= __('Reported Issues', 'codess-github-issue-creator'); ?></h1>
+
+                <div class="row">
+                    <?php
 
 
-        </div>
+                    // Check if there are any issues
+                    if ($issues && is_array($issues)) {
+                        foreach ($issues as $issue) {
+                            // Truncate issue body to a specified length (200 characters)
+                            $body = strlen($issue['body']) > 200 ? substr($issue['body'], 0, 200) . '...' : $issue['body'];
 
-        <?php
+                            // Display each issue in a responsive grid layout with multiple breakpoints
+                            ?>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4" id="issue-<?= $issue['number']; ?>">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?= $issue['title'] ?></h5>
+                                        <p class="card-text"><?= $body ?></p> <!-- Display truncated body -->
+                                        <button class="btn btn-danger delete-issue"
+                                                data-issue-id="<?= $issue['number']; ?>"><?= __('Delete Issue', 'codess-github-issue-creator') ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        echo '<p>' . __('No issues found with the specified label.', 'codess-github-issue-creator') . '</p>';
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php
+        }
     }
 
 }

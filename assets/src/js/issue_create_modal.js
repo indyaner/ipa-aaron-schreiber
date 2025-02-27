@@ -1,4 +1,3 @@
-
 (function ($) {
 
     // document ready function that listens on having all the dom elements loaded in
@@ -37,8 +36,13 @@
             issue_view_port_size.value = "";
             issue_current_page_url.value = "";
 
-            $('#success-message').remove();
+            $('.alert-dismissible').remove();
             modal.close(); // close modal using native method
+        });
+
+
+        $(document).on("click", ".alert-dismissible > .btn-close", function () {
+            $(this).closest('.alert-dismissible').remove();
         });
 
         // Close the modal by clicking outside the modal
@@ -50,7 +54,9 @@
                 issue_view_port_size.value = "";
                 issue_current_page_url.value = "";
 
-                $('#success-message').remove();
+                $('.alert-dismissible').remove();
+
+
                 modal.close(); // close modal if clicked outside
             }
         });
@@ -79,16 +85,7 @@
                     issue_title.value = "";
                     issue_description.value = "";
 
-                    function showAlert(type, message) {
-                        let modal_content = $('#codess-issue-modal > .modal-form');
-                        let alertClass = (type === 'success') ? 'alert-success' : 'alert-danger';
-                        let alertIcon = (type === 'success') ? '' : ''; // You can add specific icons if needed
 
-                        modal_content.append('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">'
-                            + message +
-                            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'
-                            + '</div>');
-                    }
 
                     if (response.status === 'success') {
                         showAlert('success', response.message);
@@ -100,7 +97,19 @@
 
                 }
             });
+            function showAlert(type, message) {
+                let modal_content = $('#codess-issue-modal > .modal-form');
+                let alertClass = (type === 'success') ? 'alert-success' : 'alert-danger';
+
+                modal_content.append('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">'
+                    + message +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'
+                    + '</div>');
+            }
         });
+
     });
+
+
 
 })(jQuery);
