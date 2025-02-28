@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-28T11:51:33+01:00\n"
+"POT-Creation-Date: 2025-02-28T14:21:10+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: codess-github-issue-creator\n"
@@ -35,81 +35,93 @@ msgstr ""
 msgid "Codess media GmbH"
 msgstr ""
 
-#: includes/EnqueueAssets.php:66
+#: includes/EnqueueAssets.php:65
 msgid "Are you sure you want to close this issue?"
 msgstr ""
 
-#: includes/GitHubIssue.php:28
+#: includes/GitHubIssue.php:31
 msgid "There was an error with the nonce security check!"
 msgstr ""
 
-#: includes/GitHubIssue.php:43
+#: includes/GitHubIssue.php:46
 msgid "Operating System and Browser:"
 msgstr ""
 
-#: includes/GitHubIssue.php:44
+#: includes/GitHubIssue.php:47
 msgid "Viewport Size:"
 msgstr ""
 
-#: includes/GitHubIssue.php:45
+#: includes/GitHubIssue.php:48
 msgid "WP User Username:"
 msgstr ""
 
-#: includes/GitHubIssue.php:46
+#: includes/GitHubIssue.php:49
 msgid "WP User Email:"
 msgstr ""
 
-#: includes/GitHubIssue.php:47
+#: includes/GitHubIssue.php:50
 msgid "Called up Page Url:"
 msgstr ""
 
-#: includes/GitHubIssue.php:60
-#: includes/GitHubIssue.php:109
+#: includes/GitHubIssue.php:63
+#: includes/GitHubIssue.php:112
 msgid "Authentication failed. Please try again."
 msgstr ""
 
-#: includes/GitHubIssue.php:69
+#: includes/GitHubIssue.php:72
 msgid "Issue created successfully!"
 msgstr ""
 
-#: includes/GitHubIssue.php:69
-#: includes/GitHubIssue.php:75
+#: includes/GitHubIssue.php:72
+#: includes/GitHubIssue.php:78
 msgid "There was an error creating the issue!"
 msgstr ""
 
-#: includes/GitHubIssue.php:116
+#: includes/GitHubIssue.php:119
 msgid "Issue closed successfully!"
 msgstr ""
 
-#: includes/GitHubIssue.php:116
+#: includes/GitHubIssue.php:119
 msgid "There was an error closing the issue!"
 msgstr ""
 
-#: includes/GitHubIssue.php:138
-#: includes/Plugin.php:273
+#: includes/GitHubIssue.php:141
 #: includes/Plugin.php:274
+#: includes/Plugin.php:275
 msgid "Reported Issues"
 msgstr ""
 
-#: includes/GitHubIssue.php:158
+#: includes/GitHubIssue.php:161
 msgid "Delete Issue"
 msgstr ""
 
-#: includes/GitHubIssue.php:165
+#: includes/GitHubIssue.php:168
 msgid "No issues found with the specified label."
 msgstr ""
 
 #: includes/Plugin.php:241
 #: includes/Plugin.php:244
-#: includes/Plugin.php:312
-#: includes/Plugin.php:343
-msgid "Report Issue"
+#: includes/Plugin.php:313
+#: includes/Plugin.php:344
+msgid "Report Bug"
 msgstr ""
 
-#: includes/Plugin.php:322
+#: includes/Plugin.php:319
+msgid "Fill out this form to report a new Bug to Codess."
+msgstr ""
+
+#: includes/Plugin.php:323
 msgid "Bug Report Title"
 msgstr ""
 
-#: includes/Plugin.php:329
+#: includes/Plugin.php:325
+msgid "Enter the bug title..."
+msgstr ""
+
+#: includes/Plugin.php:330
 msgid "Description"
+msgstr ""
+
+#: includes/Plugin.php:332
+msgid "Describe the bug..."
 msgstr ""

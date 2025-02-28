@@ -61,50 +61,116 @@
             }
         });
 
-
         $('#codess-issue-modal #submit_btn_modal').click(function (event) {
             event.preventDefault();
 
-            // javascript objects
+            // Get form data from the form
             let formData = {
                 action: 'create_issue', // action hook
                 nonce: modal_ajax.nonce,
-                title: issue_title.value, // data from form
-                description: issue_description.value, // data from form
-                operating_system: issue_operating_system.value, // data from form
-                view_port_size: issue_view_port_size.value, // data from form
-                current_page_url: issue_current_page_url.value, // data from form
+                title: issue_title.value.trim(), // data from form
+                description: issue_description.value.trim(), // data from form
+                operating_system: issue_operating_system.value.trim(), // data from form
+                view_port_size: issue_view_port_size.value.trim(), // data from form
+                current_page_url: issue_current_page_url.value.trim(), // data from form
             };
 
+            // Check form field validity before sending AJAX request
+            let titleIsValid = formData.title.length >= 3 && formData.title.length <= 30;
+            let descriptionIsValid = formData.description.length >= 3 && formData.description.length <= 300;
+
+            // Reset previous validation states
+            $('#issue_title, #issue_description').removeClass('is-invalid is-valid');
+
+            // Highlight fields based on validity
+            if (titleIsValid) {
+                $('#issue_title').addClass('is-valid');
+            } else {
+                $('#issue_title').addClass('is-invalid');
+                showAlert('warning', codess_github_issue_creator.title_error);
+            }
+
+            if (descriptionIsValid) {
+                $('#issue_description').addClass('is-valid');
+            } else {
+                $('#issue_description').addClass('is-invalid');
+                showAlert('warning', codess_github_issue_creator.description_error);
+            }
+
+            // If either field is invalid, stop here
+            if (!titleIsValid || !descriptionIsValid) {
+                return;
+            }
+
+            // If fields are valid, proceed with the AJAX request
             $.ajax({
                 url: modal_ajax.ajax_url,
                 method: 'POST',
                 data: formData,
                 success: function (response) {
+                    // Check if the response has the 'success' or 'error' status
+                    if (response.status === 'error') {
+                        // If there's an error, remove 'is-valid' and add 'is-invalid' for all fields
+                        $('#issue_title, #issue_description, #issue_operating_system, #issue_view_port_size, #issue_current_page_url')
+                            .removeClass('is-valid')
+                            .addClass('is-invalid');
 
-                    issue_title.value = "";
-                    issue_description.value = "";
+                        // Show error message
+                        showAlert('error', response.message);  // Using response message from server
+                        return; // Stop further processing
+                    }
 
-
-
+                    // If no error (status == 'success'), reset form and show success message
                     if (response.status === 'success') {
-                        showAlert('success', response.message);
-                    } else if (response.status === 'error') {
-                        showAlert('error', response.message);
+                        $('#issue_title, #issue_description').removeClass('is-invalid').addClass('is-valid'); // Confirm valid inputs
+
+                        // Reset input values
+                        issue_title.value = "";
+                        issue_description.value = "";
+
+                        showAlert('success', response.message);  // Success message from server
+                    } else if (response.status === 'warning') {
+                        showAlert('warning', response.message);  // Handle warnings
                     }
                 },
-                error: function (response) {
+                error: function () {
+                    // Handle AJAX errors
+                    $('#issue_title, #issue_description, #issue_operating_system, #issue_view_port_size, #issue_current_page_url')
+                        .removeClass('is-valid')
+                        .addClass('is-invalid');
 
+                    showAlert('error', codess_github_issue_creator.ajax_error);
                 }
             });
+
+            // Function to show alert message in modal
             function showAlert(type, message) {
                 let modal_content = $('#codess-issue-modal > .modal-form');
-                let alertClass = (type === 'success') ? 'alert-success' : 'alert-danger';
+                let alertClass;
+
+                switch (type) {
+                    case 'success':
+                        alertClass = 'alert-success';
+                        break;
+                    case 'error':
+                        alertClass = 'alert-danger';
+                        break;
+                    case 'warning':
+                        alertClass = 'alert-warning';
+                        break;
+                    default:
+                        alertClass = 'alert-info';
+                }
 
                 modal_content.append('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">'
                     + message +
                     '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'
                     + '</div>');
+
+                // Remove the last alert if there's more than one
+                if ($('.alert-dismissible').length > 1) {
+                    $('.alert-dismissible').first().remove();
+                }
             }
         });
 

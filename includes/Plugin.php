@@ -238,10 +238,11 @@ class Plugin {
             // Add the "Report Issue" menu item to the admin bar
             $admin_bar->add_menu(array(
                 'id' => 'codess-github-issue-creator-adminbar-btn', // Unique ID for the item
-                'title' => __('Report Issue', 'codess-github-issue-creator'), // Displayed title
+                'title' => __('Report Bug', 'codess-github-issue-creator'), // Displayed title
                 'href' => '#', // No redirect action
                 'meta' => [
-                    'title' => __('Report Issue', 'codess-github-issue-creator'), // Title for the tooltip
+                    'title' => __('Report Bug', 'codess-github-issue-creator'), // Title for the tooltip
+                    'class' => 'codess-github-issue-creator-adminbar-btn', // Custom class
                 ]
             ));
 
@@ -307,28 +308,29 @@ class Plugin {
                     <div class="modal-content codess-modal-content">
 
                         <!-- Modal Header -->
-                        <div class="modal-header d-flex justify-content-between">
+                        <div class="modal-header d-flex justify-content-between align-items-start">
                             <h5 class="modal-title mb-3"
-                                id="modalTitle"><?= __('Report Issue', 'codess-github-issue-creator') ?></h5>
+                                id="modalTitle"><?= __('Report Bug', 'codess-github-issue-creator') ?></h5>
                             <button type="button" class="btn-close codess-close"></button>
                         </div>
 
                         <!-- Modal Body -->
                         <div class="modal-body">
-                            <p class="text-muted"><?= __('Fill out this form to report a new GitHub Issue to Codess.', 'codess-github-issue-creator') ?></p>
+                            <p class="text-muted"><?= __('Fill out this form to report a new Bug to Codess.', 'codess-github-issue-creator') ?></p>
 
                             <div class="mb-3">
                                 <label for="issue_title"
-                                       class="form-label"><?= __('Bug Report Title', 'codess-github-issue-creator') ?></label>
+                                       class="form-label form_reuqired_asterisk"><?= __('Bug Report Title', 'codess-github-issue-creator') ?></label>
                                 <input id="issue_title" type="text" name="title" class="form-control"
-                                       placeholder="Enter the issue title" required>
+                                       placeholder="<?= __('Enter the bug title', 'codess-github-issue-creator') ?>..." required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="issue_description"
-                                       class="form-label"><?= __('Description', 'codess-github-issue-creator') ?></label>
+                                       class="form-label form_reuqired_asterisk"><?= __('Description', 'codess-github-issue-creator') ?></label>
                                 <textarea id="issue_description" name="description" class="form-control" rows="4"
-                                          placeholder="Describe the issue..." required></textarea>
+                                          placeholder="<?= __('Describe the bug', 'codess-github-issue-creator') ?>..." required></textarea>
+
                             </div>
 
                             <!-- Hidden Inputs -->
@@ -340,7 +342,7 @@ class Plugin {
                         <!-- Modal Footer -->
                         <div class="modal-footer mb-3">
                             <button type="submit" id="submit_btn_modal"
-                                    class="btn btn-primary"><?= __('Report Issue', 'codess-github-issue-creator') ?></button>
+                                    class="btn btn-primary"><?= __('Report Bug', 'codess-github-issue-creator') ?></button>
                         </div>
                     </div>
                 </form>

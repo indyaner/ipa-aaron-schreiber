@@ -195,6 +195,14 @@
   /* rtl:end:ignore */
   /* rtl:begin:remove */
   /* rtl:end:remove */
+  font-family: var(--codess-body-font-family);
+  font-size: var(--codess-body-font-size);
+  font-weight: var(--codess-body-font-weight);
+  line-height: var(--codess-body-line-height);
+  color: var(--codess-body-color);
+  text-align: var(--codess-body-text-align);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .bootstrap_wrapper *,
 .bootstrap_wrapper *::before,
@@ -3501,6 +3509,46 @@ a > .bootstrap_wrapper code {
 .bootstrap_wrapper .blockquote-footer::before {
   content: "— ";
 }
+.bootstrap_wrapper .container,
+.bootstrap_wrapper .container-fluid,
+.bootstrap_wrapper .container-xxl,
+.bootstrap_wrapper .container-xl,
+.bootstrap_wrapper .container-lg,
+.bootstrap_wrapper .container-md,
+.bootstrap_wrapper .container-sm {
+  --codess-gutter-x: 1.5rem;
+  --codess-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--codess-gutter-x) * 0.5);
+  padding-left: calc(var(--codess-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 576px) {
+  .bootstrap_wrapper .container-sm, .bootstrap_wrapper .container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .bootstrap_wrapper .container-md, .bootstrap_wrapper .container-sm, .bootstrap_wrapper .container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .bootstrap_wrapper .container-lg, .bootstrap_wrapper .container-md, .bootstrap_wrapper .container-sm, .bootstrap_wrapper .container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .bootstrap_wrapper .container-xl, .bootstrap_wrapper .container-lg, .bootstrap_wrapper .container-md, .bootstrap_wrapper .container-sm, .bootstrap_wrapper .container {
+    max-width: 1140px;
+  }
+}
+@media (min-width: 1400px) {
+  .bootstrap_wrapper .container-xxl, .bootstrap_wrapper .container-xl, .bootstrap_wrapper .container-lg, .bootstrap_wrapper .container-md, .bootstrap_wrapper .container-sm, .bootstrap_wrapper .container {
+    max-width: 1320px;
+  }
+}
 .bootstrap_wrapper .card {
   --codess-card-spacer-y: 1rem;
   --codess-card-spacer-x: 1rem;
@@ -3672,6 +3720,137 @@ a > .bootstrap_wrapper code {
   .bootstrap_wrapper .card-group > .card:not(:first-child) .card-footer {
     border-bottom-left-radius: 0;
   }
+}
+.bootstrap_wrapper .accordion {
+  --codess-accordion-color: var(--codess-body-color);
+  --codess-accordion-bg: var(--codess-body-bg);
+  --codess-accordion-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
+  --codess-accordion-border-color: var(--codess-border-color);
+  --codess-accordion-border-width: var(--codess-border-width);
+  --codess-accordion-border-radius: var(--codess-border-radius);
+  --codess-accordion-inner-border-radius: calc(var(--codess-border-radius) - (var(--codess-border-width)));
+  --codess-accordion-btn-padding-x: 1.25rem;
+  --codess-accordion-btn-padding-y: 1rem;
+  --codess-accordion-btn-color: var(--codess-body-color);
+  --codess-accordion-btn-bg: var(--codess-accordion-bg);
+  --codess-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5L8 11L14 5'/%3e%3c/svg%3e");
+  --codess-accordion-btn-icon-width: 1.25rem;
+  --codess-accordion-btn-icon-transform: rotate(-180deg);
+  --codess-accordion-btn-icon-transition: transform 0.2s ease-in-out;
+  --codess-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5L8 11L14 5'/%3e%3c/svg%3e");
+  --codess-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  --codess-accordion-body-padding-x: 1.25rem;
+  --codess-accordion-body-padding-y: 1rem;
+  --codess-accordion-active-color: var(--codess-primary-text-emphasis);
+  --codess-accordion-active-bg: var(--codess-primary-bg-subtle);
+}
+.bootstrap_wrapper .accordion-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--codess-accordion-btn-padding-y) var(--codess-accordion-btn-padding-x);
+  font-size: 1rem;
+  color: var(--codess-accordion-btn-color);
+  text-align: left;
+  background-color: var(--codess-accordion-btn-bg);
+  border: 0;
+  border-radius: 0;
+  overflow-anchor: none;
+  transition: var(--codess-accordion-transition);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bootstrap_wrapper .accordion-button {
+    transition: none;
+  }
+}
+.bootstrap_wrapper .accordion-button:not(.collapsed) {
+  color: var(--codess-accordion-active-color);
+  background-color: var(--codess-accordion-active-bg);
+  box-shadow: inset 0 calc(-1 * var(--codess-accordion-border-width)) 0 var(--codess-accordion-border-color);
+}
+.bootstrap_wrapper .accordion-button:not(.collapsed)::after {
+  background-image: var(--codess-accordion-btn-active-icon);
+  transform: var(--codess-accordion-btn-icon-transform);
+}
+.bootstrap_wrapper .accordion-button::after {
+  flex-shrink: 0;
+  width: var(--codess-accordion-btn-icon-width);
+  height: var(--codess-accordion-btn-icon-width);
+  margin-left: auto;
+  content: "";
+  background-image: var(--codess-accordion-btn-icon);
+  background-repeat: no-repeat;
+  background-size: var(--codess-accordion-btn-icon-width);
+  transition: var(--codess-accordion-btn-icon-transition);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bootstrap_wrapper .accordion-button::after {
+    transition: none;
+  }
+}
+.bootstrap_wrapper .accordion-button:hover {
+  z-index: 2;
+}
+.bootstrap_wrapper .accordion-button:focus {
+  z-index: 3;
+  outline: 0;
+  box-shadow: var(--codess-accordion-btn-focus-box-shadow);
+}
+.bootstrap_wrapper .accordion-header {
+  margin-bottom: 0;
+}
+.bootstrap_wrapper .accordion-item {
+  color: var(--codess-accordion-color);
+  background-color: var(--codess-accordion-bg);
+  border: var(--codess-accordion-border-width) solid var(--codess-accordion-border-color);
+}
+.bootstrap_wrapper .accordion-item:first-of-type {
+  border-top-left-radius: var(--codess-accordion-border-radius);
+  border-top-right-radius: var(--codess-accordion-border-radius);
+}
+.bootstrap_wrapper .accordion-item:first-of-type > .accordion-header .accordion-button {
+  border-top-left-radius: var(--codess-accordion-inner-border-radius);
+  border-top-right-radius: var(--codess-accordion-inner-border-radius);
+}
+.bootstrap_wrapper .accordion-item:not(:first-of-type) {
+  border-top: 0;
+}
+.bootstrap_wrapper .accordion-item:last-of-type {
+  border-bottom-right-radius: var(--codess-accordion-border-radius);
+  border-bottom-left-radius: var(--codess-accordion-border-radius);
+}
+.bootstrap_wrapper .accordion-item:last-of-type > .accordion-header .accordion-button.collapsed {
+  border-bottom-right-radius: var(--codess-accordion-inner-border-radius);
+  border-bottom-left-radius: var(--codess-accordion-inner-border-radius);
+}
+.bootstrap_wrapper .accordion-item:last-of-type > .accordion-collapse {
+  border-bottom-right-radius: var(--codess-accordion-border-radius);
+  border-bottom-left-radius: var(--codess-accordion-border-radius);
+}
+.bootstrap_wrapper .accordion-body {
+  padding: var(--codess-accordion-body-padding-y) var(--codess-accordion-body-padding-x);
+}
+.bootstrap_wrapper .accordion-flush > .accordion-item {
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+}
+.bootstrap_wrapper .accordion-flush > .accordion-item:first-child {
+  border-top: 0;
+}
+.bootstrap_wrapper .accordion-flush > .accordion-item:last-child {
+  border-bottom: 0;
+}
+.bootstrap_wrapper .accordion-flush > .accordion-item > .accordion-header .accordion-button, .bootstrap_wrapper .accordion-flush > .accordion-item > .accordion-header .accordion-button.collapsed {
+  border-radius: 0;
+}
+.bootstrap_wrapper .accordion-flush > .accordion-item > .accordion-collapse {
+  border-radius: 0;
+}
+.bootstrap_wrapper [data-bs-theme=dark] .accordion-button::after {
+  --codess-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --codess-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 .bootstrap_wrapper .btn-close {
   --codess-btn-close-color: #000;
@@ -9465,4 +9644,24 @@ a > .bootstrap_wrapper code {
   .bootstrap_wrapper .d-print-none {
     display: none !important;
   }
+}
+.bootstrap_wrapper #codess-issue-modal {
+  box-shadow: black 0px 0px 15px;
+}
+.bootstrap_wrapper .accordion-button:not(.collapsed) {
+  background-color: #ffbbbb;
+  color: black;
+}
+.bootstrap_wrapper .accordion-button.collapsed {
+  background-color: #ffbbbb;
+}
+.bootstrap_wrapper .accordion-body {
+  display: none;
+}
+.bootstrap_wrapper .show .accordion-body {
+  display: block;
+}
+.bootstrap_wrapper .form_reuqired_asterisk:after {
+  content: " *";
+  color: red;
 }

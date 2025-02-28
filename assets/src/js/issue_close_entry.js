@@ -1,3 +1,4 @@
+import 'bootstrap';
 (function ($) {
     jQuery(document).ready(function ($) {
         // Add event listener for delete buttons
@@ -20,7 +21,7 @@
                         // Handle success response
                         if (response.status === 'success') {
                             // Try to remove the issue card with the correct ID
-                            $('#issue-' + issueId).fadeOut(500, function () {
+                            $('#collapse-' + issueId).fadeOut(500, function () {
                                 $(this).remove(); // Remove the issue from the DOM after fading out
                             });
                         } else if (response.status === 'error') {

@@ -25,54 +25,94 @@ class GitHubIssue {
             // If the nonce is invalid, do not proceed
             $response = array(
                 'status' => 'error',
-                'message' => __('There was an error with the nonce security check!', 'codess-github-issue-creator'),
+                'message' => __('There was an error with the security check!', 'codess-github-issue-creator'),
             );
 
         } else {
 
-            //todo add validation here to hook in and check all fields
+            $validation = new Validation();
+            $post = $validation->sanitize_post($_POST);
 
             // check for user input
-            if (!empty($_POST['title']) && !empty($_POST['description'])) {
+            if ($post !== false) {
+                // Initialize the response variable
+                $response = [];
 
+
+                // Initialize a new GitHubApi object
+                $github = new GitHubApi();
                 $current_user = wp_get_current_user();
                 $username = $current_user->user_login;
                 $email = $current_user->user_email;
 
-                $description = $_POST['description'] . "\n\n";
-                $description .= __('Operating System and Browser:', 'codess-github-issue-creator') . ' ' . $_POST['operating_system'] . "\n";
-                $description .= __('Viewport Size:', 'codess-github-issue-creator') . ' ' . $_POST['view_port_size'] . "\n";
-                $description .= __('WP User Username:', 'codess-github-issue-creator') . ' ' . $username . "\n";
-                $description .= __('WP User Email:', 'codess-github-issue-creator') . ' ' . $email . "\n";
-                $description .= __('Called up Page Url:', 'codess-github-issue-creator') . ' ' . $_POST['current_page_url'] . "\n";
+                $description_content = $post['description'] . "\n\n";
+                $description_content .= __('Operating System and Browser:', 'codess-github-issue-creator') . ' ' . $post['operating_system'] . "\n";
+                $description_content .= __('Viewport Size:', 'codess-github-issue-creator') . ' ' . $post['view_port_size'] . "\n";
+                $description_content .= __('WP User Username:', 'codess-github-issue-creator') . ' ' . $username . "\n";
+                $description_content .= __('WP User Email:', 'codess-github-issue-creator') . ' ' . $email . "\n";
+                $description_content .= __('Called up Page Url:', 'codess-github-issue-creator') . ' ' . $post['current_page_url'] . "\n";
 
-                // initialize a new GitHubApi object
-                $github = new GitHubApi();
+                // Check the conditions for different scenarios
+                switch (true) {
+                    case empty($post['title']) && empty($post['description']):
+                        $response = [
+                            'status' => 'warning',
+                            'message' => __('Please fill out the Form', 'codess-github-issue-creator'),
+                        ];
+                        break;
 
-                // get the authenticated user
-                $loggedInUser = $github->getAuthenticatedUser();
+                    case empty($post['title']):
+                        $response = [
+                            'status' => 'warning',
+                            'message' => __('Please fill out the Title field!', 'codess-github-issue-creator'),
+                        ];
+                        break;
 
-                // check if the user is authenticated
-                if ($loggedInUser === false) {
-                    // handle the error: User authentication failed
-                    $response = [
-                        'status' => 'error',
-                        'message' => __('Authentication failed. Please try again.', 'codess-github-issue-creator'),
-                    ];
-                } else {
-                    // create the issue using the provided title, description, label, and assignees
-                    $result = $github->createIssue($_POST['title'], $description, [GITHUB_LABEL], [$loggedInUser]);
+                    case empty($post['description']):
+                        $response = [
+                            'status' => 'warning',
+                            'message' => __('Please fill out the Description field!', 'codess-github-issue-creator'),
+                        ];
+                        break;
 
-                    // prepare the response based on the result of the issue creation
-                    $response = [
-                        'status' => $result ? 'success' : 'error',
-                        'message' => $result ? __('Issue created successfully!', 'codess-github-issue-creator') : __('There was an error creating the issue!', 'codess-github-issue-creator'),
-                    ];
+                    case strlen($post['title']) < 3 || strlen($post['title']) > 30:
+                        $response = [
+                            'status' => 'warning',
+                            'message' => __('Title must be between 3 and 30 characters!', 'codess-github-issue-creator'),
+                        ];
+                        break;
+
+                    case strlen($post['description']) < 3 || strlen($post['description']) > 300:
+                        $response = [
+                            'status' => 'warning',
+                            'message' => __('Description must be between 3 and 300 characters!', 'codess-github-issue-creator'),
+                        ];
+                        break;
+
+                    default:
+                        // Check for user authentication
+                        $loggedInUser = $github->getAuthenticatedUser();
+                        if ($loggedInUser === false) {
+                            $response = [
+                                'status' => 'error',
+                                'message' => __('Authentication failed. Please try again.', 'codess-github-issue-creator'),
+                            ];
+                        } else {
+                            // Create the issue using the provided title, description, label, and assignees
+                            $result = $github->createIssue($post['title'], $description_content, [GITHUB_LABEL], [$loggedInUser]);
+
+                            // Prepare the response based on the result of the issue creation
+                            $response = [
+                                'status' => $result ? 'success' : 'error',
+                                'message' => $result ? __('Issue created successfully!', 'codess-github-issue-creator') : __('There was an error creating the issue!', 'codess-github-issue-creator'),
+                            ];
+                        }
+                        break;
                 }
             } else {
                 $response = array(
                     'status' => 'error',
-                    'message' => __('There was an error creating the issue!', 'codess-github-issue-creator'),
+                    'message' => __('There was an error with your inputs!', 'codess-github-issue-creator'),
                 );
             }
         }
@@ -131,29 +171,36 @@ class GitHubIssue {
      */
     public function codess_backend_page(): void {
         $github = new GitHubApi();
-        $issues = $github->getOpenIssues(GITHUB_LABEL); // Fetch issues with specific label
+        $issues = $github->getOpenIssues(GITHUB_LABEL); // Fetch issues with a specific label
         if (current_user_can('manage_github_api_issues')) {
             ?>
-            <div class="wrap bootstrap_wrapper">
+            <div class="wrap bootstrap_wrapper container">
                 <h1><?= __('Reported Issues', 'codess-github-issue-creator'); ?></h1>
 
-                <div class="row">
+                <div id="issuesAccordion">
                     <?php
-
-
                     // Check if there are any issues
                     if ($issues && is_array($issues)) {
-                        foreach ($issues as $issue) {
-                            // Truncate issue body to a specified length (200 characters)
-                            $body = strlen($issue['body']) > 200 ? substr($issue['body'], 0, 200) . '...' : $issue['body'];
+                        foreach ($issues as $index => $issue) {
 
-                            // Display each issue in a responsive grid layout with multiple breakpoints
+                            // Generate unique IDs for each issue
+                            $accordion_id = 'issue-' . $issue['number'];
+                            $collapse_id = 'collapse-' . $issue['number'];
+                            $heading_id = 'heading-' . $issue['number'];
                             ?>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4" id="issue-<?= $issue['number']; ?>">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?= $issue['title'] ?></h5>
-                                        <p class="card-text"><?= $body ?></p> <!-- Display truncated body -->
+                            <div class="accordion bg-light mb-3" id="<?= $collapse_id; ?>">
+                                <h2 class="accordion-header bg-info" id="<?= $heading_id; ?>">
+                                    <button class="accordion-button collapsed" type="button"
+                                            aria-expanded="<?= $index === 0 ? 'true' : 'false'; ?>"
+                                            aria-controls="<?= $collapse_id; ?>" data-bs-toggle="collapse"
+                                            data-bs-target="#<?= $collapse_id; ?>">
+                                        <?= $issue['title']; ?>
+                                    </button>
+                                </h2>
+                                <div class="accordion-collapse collapse " aria-labelledby="<?= $heading_id; ?>"
+                                     data-bs-parent="#issuesAccordion">
+                                    <div class="accordion-body">
+                                        <p class="card-text"><?= $issue['body']; ?></p> <!-- Display truncated body -->
                                         <button class="btn btn-danger delete-issue"
                                                 data-issue-id="<?= $issue['number']; ?>"><?= __('Delete Issue', 'codess-github-issue-creator') ?></button>
                                     </div>
