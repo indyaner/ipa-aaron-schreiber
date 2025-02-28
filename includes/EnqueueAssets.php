@@ -38,11 +38,12 @@ class EnqueueAssets {
         wp_enqueue_style('codess-github-issue-creator-styles', CODESS_GITHUB_ISSUE_CREATOR_URL . 'assets/css/custom_styles.css', array(), $this->version );
         wp_enqueue_script('codess-github-issue-creator-scripts', CODESS_GITHUB_ISSUE_CREATOR_URL . 'assets/js/issue_create_modal.js', array('jquery'), $this->version, true );
 
-        $nonce = wp_create_nonce('modal_report_nonce');
+
+
 
         wp_localize_script( 'codess-github-issue-creator-scripts', 'modal_ajax', array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),
-            'nonce' => $nonce
+            'nonce' => wp_create_nonce('modal_report_nonce')
         ));
 	}
 
@@ -60,6 +61,11 @@ class EnqueueAssets {
         $modal_nonce = wp_create_nonce('modal_report_nonce');
         $close_nonce = wp_create_nonce('modal_report_nonce');
 
+        // Localize the script with translatable strings
+        wp_localize_script('codess-github-issue-creator-admin-scripts', 'codess_github_issue_close', array(
+            'confirm_close_message' => __('Are you sure you want to close this issue?', 'codess-github-issue-creator'),
+            //'issue_report_message'   => __('Issue created successfully!', 'codess-github-issue-creator'),
+        ));
 
         wp_localize_script( 'codess-github-issue-creator-admin-scripts', 'modal_ajax', array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),

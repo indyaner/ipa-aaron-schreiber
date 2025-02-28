@@ -1,0 +1,115 @@
+# Copyright (C) 2025 Codess media GmbH
+# This file is distributed under the Copyright.
+msgid ""
+msgstr ""
+"Project-Id-Version: Codess GitHub Issue Creator 1.0.0-dev\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-28T11:51:33+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: codess-github-issue-creator\n"
+
+#. Plugin Name of the plugin
+#: bootstrap.php
+msgid "Codess GitHub Issue Creator"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: bootstrap.php
+msgid "https://codess.media"
+msgstr ""
+
+#. Description of the plugin
+#: bootstrap.php
+msgid "Für das erstellen und die ansicht von GitHub issues, über die GitHub API."
+msgstr ""
+
+#. Author of the plugin
+#: bootstrap.php
+msgid "Codess media GmbH"
+msgstr ""
+
+#: includes/EnqueueAssets.php:66
+msgid "Are you sure you want to close this issue?"
+msgstr ""
+
+#: includes/GitHubIssue.php:28
+msgid "There was an error with the nonce security check!"
+msgstr ""
+
+#: includes/GitHubIssue.php:43
+msgid "Operating System and Browser:"
+msgstr ""
+
+#: includes/GitHubIssue.php:44
+msgid "Viewport Size:"
+msgstr ""
+
+#: includes/GitHubIssue.php:45
+msgid "WP User Username:"
+msgstr ""
+
+#: includes/GitHubIssue.php:46
+msgid "WP User Email:"
+msgstr ""
+
+#: includes/GitHubIssue.php:47
+msgid "Called up Page Url:"
+msgstr ""
+
+#: includes/GitHubIssue.php:60
+#: includes/GitHubIssue.php:109
+msgid "Authentication failed. Please try again."
+msgstr ""
+
+#: includes/GitHubIssue.php:69
+msgid "Issue created successfully!"
+msgstr ""
+
+#: includes/GitHubIssue.php:69
+#: includes/GitHubIssue.php:75
+msgid "There was an error creating the issue!"
+msgstr ""
+
+#: includes/GitHubIssue.php:116
+msgid "Issue closed successfully!"
+msgstr ""
+
+#: includes/GitHubIssue.php:116
+msgid "There was an error closing the issue!"
+msgstr ""
+
+#: includes/GitHubIssue.php:138
+#: includes/Plugin.php:273
+#: includes/Plugin.php:274
+msgid "Reported Issues"
+msgstr ""
+
+#: includes/GitHubIssue.php:158
+msgid "Delete Issue"
+msgstr ""
+
+#: includes/GitHubIssue.php:165
+msgid "No issues found with the specified label."
+msgstr ""
+
+#: includes/Plugin.php:241
+#: includes/Plugin.php:244
+#: includes/Plugin.php:312
+#: includes/Plugin.php:343
+msgid "Report Issue"
+msgstr ""
+
+#: includes/Plugin.php:322
+msgid "Bug Report Title"
+msgstr ""
+
+#: includes/Plugin.php:329
+msgid "Description"
+msgstr ""

@@ -4,6 +4,7 @@ namespace Codess\CodessGitHubIssueCreator;
 
 use Codess\CodessGitHubIssueCreator\admin\Admin;
 use Codess\CodessGitHubIssueCreator\config\PostTypes;
+use Exception;
 use WP_Admin_Bar;
 
 /**
@@ -137,58 +138,166 @@ class Plugin {
     }
 
     /**
-     * Register all hooks related to assets.
+     * Register all hooks related to asset enqueuing.
+     *
+     * This method registers the hooks necessary to enqueue public and admin assets for the plugin.
+     * It ensures that the required CSS, JavaScript, and other assets are properly loaded for both the front-end
+     * and admin areas of WordPress. The hooks are registered using the plugin's loader class.
      *
      * @return void
+     *
+     * @throws Exception If an error occurs while registering the enqueue hooks.
+     *
+     * @since 1.0.0-dev
      */
     public function define_enqueue_hooks(): void {
-        $plugin_enqueue = new EnqueueAssets($this->version);
+        try {
+            $plugin_enqueue = new EnqueueAssets($this->version);
 
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_enqueue, 'enqueue_public_assets');
-        $this->loader->add_action('admin_enqueue_scripts', $plugin_enqueue, 'enqueue_admin_assets');
+            // Register public assets enqueue hook
+            $this->loader->add_action('wp_enqueue_scripts', $plugin_enqueue, 'enqueue_public_assets');
 
+            // Register admin assets enqueue hook
+            $this->loader->add_action('admin_enqueue_scripts', $plugin_enqueue, 'enqueue_admin_assets');
+        } catch (Exception $e) {
+            // Log the exception and provide helpful debugging information
+            error_log('Error registering enqueue hooks: ' . $e->getMessage());
+        }
     }
 
 
     /**
+     * Registers the activation hook for the plugin.
      *
+     * This method is used to register a custom activation hook for the plugin. It ensures that when the plugin is
+     * activated, the necessary capabilities are registered. The activation process occurs after the theme has been set up.
+     *
+     * @return void
+     *
+     * @throws Exception If there is an error while registering capabilities.
+     *
+     * @since 1.0.0-dev
      */
     private function define_activation_hooks(): void {
+        try {
+            // Create an instance of the Activator class to handle the registration of capabilities
             $activator = new Activator();
+
+            // Register the action hook that will trigger the 'register_capabilities' method
             $this->loader->add_action('after_setup_theme', $activator, 'register_capabilities');
+        } catch (Exception $e) {
+            // Handle exceptions by logging the error and possibly showing a message to the user
+            error_log('Error registering activation hooks: ' . $e->getMessage());
+        }
     }
 
 
     /**
-     * Run the loader to execute all the hooks with WordPress.
+     * Runs the loader to execute all the registered hooks with WordPress.
+     *
+     * This method triggers the execution of all hooks that have been registered in the loader. It is responsible
+     * for ensuring that all actions and filters are properly hooked into WordPress at the appropriate time.
+     * It will be called once all the necessary hooks have been registered in the plugin.
      *
      * @return void
+     *
+     * @throws Exception If there is an error while running the loader or executing hooks.
+     *
+     * @since 1.0.0-dev
      */
     public function run(): void {
-        $this->loader->run();
+        try {
+            // Execute all the registered hooks with WordPress
+            $this->loader->run();
+        } catch (Exception $e) {
+            // Handle the exception if any error occurs while running the loader
+            error_log('Error running the loader: ' . $e->getMessage());
+        }
     }
 
     /**
-     * @param WP_Admin_Bar $admin_bar
+     * Adds a custom "Report Issue" item to the WordPress admin bar for users with appropriate permissions.
+     *
+     * This function checks if the current user has the capability to manage options (administrator and editor),
+     * and adds a custom admin bar item with the title "Report Issue". The item does not perform a redirect when clicked.
+     *
+     * @param WP_Admin_Bar $admin_bar The WP_Admin_Bar instance to which the menu item will be added.
+     *
      * @return void
+     * @throws Exception If an error occurs when adding the item to the admin bar.
+     *
+     * @since 1.0.0-dev
      */
     function admin_bar_item(WP_Admin_Bar $admin_bar): void {
-        if (!current_user_can('manage_options')) {
-            return;
+        try {
+            // Check if the user has the 'manage_options' capability
+            if (!current_user_can('manage_options')) {
+                return;
+            }
+
+            // Add the "Report Issue" menu item to the admin bar
+            $admin_bar->add_menu(array(
+                'id' => 'codess-github-issue-creator-adminbar-btn', // Unique ID for the item
+                'title' => __('Report Issue', 'codess-github-issue-creator'), // Displayed title
+                'href' => '#', // No redirect action
+                'meta' => [
+                    'title' => __('Report Issue', 'codess-github-issue-creator'), // Title for the tooltip
+                ]
+            ));
+
+        } catch (Exception $e) {
+            // Log the exception error for debugging or admin purposes
+            error_log('Error adding custom admin bar item: ' . $e->getMessage());
         }
-        $admin_bar->add_menu(array(
-            'id' => 'codess-github-issue-creator-adminbar-btn',
-            'title' => __('Report Issue', 'codess-github-issue-creator'),
-            'href' => '#', // no redirect
-            'meta' => [
-                'title' => __('Report Issue', 'codess-github-issue-creator'),
-            ]
-        ));
+    }
+
+    /**
+     * Adds a custom admin menu page to the WordPress admin panel for viewing reported issues.
+     *
+     * This function adds a menu page under the admin menu to view the reported issues via the `GitHubIssue` class.
+     * The page is accessible to users with the 'manage_options' capability (administrator and editor). The menu page will
+     * use the `codess_backend_page` method of the `GitHubIssue` class to display the issues.
+     *
+     * @return void
+     * @throws Exception If the GitHub issues page cannot be added due to any error.
+     *
+     * @since 1.0.0-dev
+     */
+    function codess_add_admin_menu(): void {
+        try {
+            // Instantiate the GitHubIssue class to use its method as a callback
+            $git_hub_issue = new GitHubIssue();
+
+            // Add the custom menu page to the WordPress admin menu
+            add_menu_page(
+                __('Reported Issues', 'codess-github-issue-creator'), // Page title
+                __('Reported Issues', 'codess-github-issue-creator'), // Menu title
+                'manage_options', // Capability
+                'reported-issues', // Menu slug
+                array($git_hub_issue, 'codess_backend_page'), // Callback function
+                'dashicons-list-view', // Menu icon
+                80 // Position in the menu
+            );
+
+        } catch (Exception $e) {
+            // Log the exception error for debugging purposes
+            error_log('Error adding admin menu: ' . $e->getMessage());
+        }
     }
 
 
     /**
+     * Displays the modal form for reporting a new GitHub issue.
+     *
+     * This function outputs HTML for a Bootstrap-styled modal that allows users to submit bug reports or GitHub issues.
+     * The modal contains form fields for the issue title, description, and some hidden fields to capture operating system,
+     * viewport size, and the current page URL. The modal is displayed within a wrapper that utilizes Bootstrap's styling.
+     *
+     * The modal also includes a submit button that will trigger the process of reporting the issue once the form is filled out.
+     *
      * @return void
+     *
+     * @since 1.0.0-dev
      */
     function add_admin_bar_modal(): void {
         ?>
@@ -233,27 +342,10 @@ class Plugin {
                             <button type="submit" id="submit_btn_modal"
                                     class="btn btn-primary"><?= __('Report Issue', 'codess-github-issue-creator') ?></button>
                         </div>
-
                     </div>
                 </form>
             </dialog>
         </div>
         <?php
-    }
-
-
-    function codess_add_admin_menu(): void {
-
-        $git_hub_issue = new GitHubIssue();
-
-        add_menu_page(
-            __('Reported Issues', 'codess-github-issue-creator'), // Page title
-            __('Reported Issues', 'codess-github-issue-creator'), // Menu title
-            'manage_options', // Capability (only for admins)
-            'reported-issues',// Menu slug
-            array($git_hub_issue, 'codess_backend_page'),// Callback function
-            'dashicons-admin-generic', // Menu icon
-            80 // Position in the menu
-        );
     }
 }

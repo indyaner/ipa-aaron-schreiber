@@ -5,7 +5,7 @@
             const issueId = $(this).data('issue-id'); // Get issue ID from data attribute
 
             // Confirm if the user really wants to delete
-            if (confirm('Are you sure you want to delete this issue?')) {
+            if (confirm(codess_github_issue_close.confirm_close_message)) {
                 let formData = {
                     action: 'close_issue', // action hook
                     nonce: close_ajax.nonce, // Include nonce for security

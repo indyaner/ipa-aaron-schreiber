@@ -15,10 +15,10 @@ class PostTypes {
      * @return void
      */
     public function register_post_types(): void{
-        $this->register_custom_post_type();
+        //$this->register_custom_post_type();
     }
 
-    private function register_custom_post_type(){
+    /*private function register_custom_post_type(){
         $labels = array(
             'name'                  => _x( 'Custom Posts', 'Post type plural name', 'codess-github-issue-creator' ),
             'singular_name'         => _x( 'Custom Post', 'Post type singular name', 'codess-github-issue-creator' ),
@@ -72,5 +72,5 @@ class PostTypes {
             'plural'   => __('Events', 'codess-github-issue-creator'),
             'slug'     => __('events', 'codess-github-issue-creator'),
         ) );
-    }
+    }*/
 }
