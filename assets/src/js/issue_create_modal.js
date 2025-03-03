@@ -1,153 +1,150 @@
 (function ($) {
 
-    // document ready function that listens on having all the dom elements loaded in
+    // Document ready function to ensure the DOM is fully loaded before any operations
     jQuery(document).ready(function ($) {
-        let modal = $("#codess-issue-modal")[0]; // Use the native DOM element, not a jQuery object
-        let adminBarBtn = $("#wp-admin-bar-codess-github-issue-creator-adminbar-btn");
-        let issue_view_port_size = document.getElementById("issue_view_port_size");
-        let issue_operating_system = document.getElementById("issue_operating_system");
-        let issue_title = document.getElementById("issue_title");
-        let issue_description = document.getElementById("issue_description");
-        let issue_current_page_url = document.getElementById("issue_current_page_url");
+        const modal = $("#codess-issue-modal")[0]; // Use the native DOM element for the modal (not jQuery object)
+        const adminBarBtn = $("#wp-admin-bar-codess-github-issue-creator-adminbar-btn"); // Admin bar button
+        const issue_view_port_size = document.getElementById("issue_view_port_size"); // Hidden field for viewport size
+        const issue_operating_system = document.getElementById("issue_operating_system"); // Hidden field for the OS info
+        const issue_title = document.getElementById("issue_title"); // User-editable field for the issue title
+        const issue_description = document.getElementById("issue_description"); // User-editable field for the issue description
+        const issue_current_page_url = document.getElementById("issue_current_page_url"); // Hidden field for the current page URL
 
-
-        // Click event for the admin bar button
+        // Event listener for the admin bar button, opening the modal and pre-filling some fields
         adminBarBtn.on("click", function (e) {
-            e.preventDefault(); // prevent default redirect on button click
-            modal.showModal(); // open modal using native method
+            e.preventDefault(); // Prevent the default action of the button (navigation)
+            modal.showModal(); // Open the modal using the native method (HTMLDialogElement)
 
-            // fill with browser and operating system data and fills into a a hidden field: issue_operating_system
+            // Pre-fill the hidden issue_operating_system field with the user's OS and browser information
             issue_operating_system.value = navigator.userAgent;
 
-            // gets current browser window size and saves it into hidden field: issue_view_port_size
-            let viewportWidth = $(window).width();
-            let viewportHeight = $(window).height();
-
+            // Get the current browser window size and store it in the hidden issue_view_port_size field
+            const viewportWidth = $(window).width(); // Get viewport width
+            const viewportHeight = $(window).height(); // Get viewport height
             issue_view_port_size.value = viewportWidth + 'px x ' + viewportHeight + 'px';
 
+            // Store the current page URL in the hidden issue_current_page_url field
             issue_current_page_url.value = window.location.href;
         });
 
-        // Close the modal by pressing X
+        // Event listener for the modal close button
         $(".codess-close").on("click", function () {
-
-            // clears values before closing the modal
+            // Clear all values from hidden fields when closing the modal
             issue_operating_system.value = "";
             issue_view_port_size.value = "";
             issue_current_page_url.value = "";
 
+            // Remove validation classes (both valid and invalid) from the title and description fields
+            $('#issue_title, #issue_description').removeClass('is-valid is-invalid');
+
+            // Remove any displayed alert messages
             $('.alert-dismissible').remove();
-            modal.close(); // close modal using native method
+
+            // Close the modal using the native method
+            modal.close();
         });
 
-
+        // Event listener for the close button in alert messages
         $(document).on("click", ".alert-dismissible > .btn-close", function () {
+            // Remove the alert message when the close button is clicked
             $(this).closest('.alert-dismissible').remove();
         });
 
-        // Close the modal by clicking outside the modal
+        // Event listener for clicks outside the modal to close it
         modal.addEventListener("click", function (e) {
-            if (e.target === modal) {
-
-                // clears values before closing the modal
+            if (e.target === modal) { // Check if the click was outside the modal (on the backdrop)
+                // Clear all values from hidden fields when closing the modal
                 issue_operating_system.value = "";
                 issue_view_port_size.value = "";
                 issue_current_page_url.value = "";
 
+                // Remove validation classes (both valid and invalid) from the title and description fields
+                $('#issue_title, #issue_description').removeClass('is-valid is-invalid');
+
+                // Remove any displayed alert messages
                 $('.alert-dismissible').remove();
 
-
-                modal.close(); // close modal if clicked outside
+                // Close the modal using the native method
+                modal.close();
             }
         });
 
+        // Event listener for the submit button within the modal
         $('#codess-issue-modal #submit_btn_modal').click(function (event) {
-            event.preventDefault();
+            event.preventDefault(); // Prevent the default form submission
 
-            // Get form data from the form
+            // Collect form data (both visible and hidden fields)
             let formData = {
-                action: 'create_issue', // action hook
-                nonce: modal_ajax.nonce,
-                title: issue_title.value.trim(), // data from form
-                description: issue_description.value.trim(), // data from form
-                operating_system: issue_operating_system.value.trim(), // data from form
-                view_port_size: issue_view_port_size.value.trim(), // data from form
-                current_page_url: issue_current_page_url.value.trim(), // data from form
+                action: 'create_issue', // The action to be handled by the server (AJAX action hook)
+                nonce: modal_ajax.nonce, // A security token (nonce) to prevent CSRF attacks
+                title: issue_title.value.trim(), // Trim the title value to remove extra spaces
+                description: issue_description.value.trim(), // Trim the description value to remove extra spaces
+                operating_system: issue_operating_system.value.trim(), // Hidden OS info
+                view_port_size: issue_view_port_size.value.trim(), // Hidden viewport size
+                current_page_url: issue_current_page_url.value.trim(), // Hidden current page URL
             };
 
-            // Check form field validity before sending AJAX request
-            let titleIsValid = formData.title.length >= 3 && formData.title.length <= 30;
-            let descriptionIsValid = formData.description.length >= 3 && formData.description.length <= 300;
+            let editableFields = ['#issue_title', '#issue_description']; // Define the editable fields (title and description)
 
-            // Reset previous validation states
-            $('#issue_title, #issue_description').removeClass('is-invalid is-valid');
+            // Reset validation classes (remove any 'is-valid' or 'is-invalid' classes) for the editable fields
+            $(editableFields.join(', ')).removeClass('is-invalid is-valid');
 
-            // Highlight fields based on validity
-            if (titleIsValid) {
-                $('#issue_title').addClass('is-valid');
-            } else {
-                $('#issue_title').addClass('is-invalid');
-                showAlert('warning', codess_github_issue_creator.title_error);
-            }
-
-            if (descriptionIsValid) {
-                $('#issue_description').addClass('is-valid');
-            } else {
-                $('#issue_description').addClass('is-invalid');
-                showAlert('warning', codess_github_issue_creator.description_error);
-            }
-
-            // If either field is invalid, stop here
-            if (!titleIsValid || !descriptionIsValid) {
-                return;
-            }
-
-            // If fields are valid, proceed with the AJAX request
+            // Proceed with the AJAX request
             $.ajax({
-                url: modal_ajax.ajax_url,
-                method: 'POST',
-                data: formData,
+                url: modal_ajax.ajax_url, // The URL where the AJAX request will be sent (WordPress AJAX URL)
+                method: 'POST', // HTTP method (POST)
+                data: formData, // Send the form data
                 success: function (response) {
-                    // Check if the response has the 'success' or 'error' status
                     if (response.status === 'error') {
-                        // If there's an error, remove 'is-valid' and add 'is-invalid' for all fields
-                        $('#issue_title, #issue_description, #issue_operating_system, #issue_view_port_size, #issue_current_page_url')
-                            .removeClass('is-valid')
-                            .addClass('is-invalid');
-
-                        // Show error message
-                        showAlert('error', response.message);  // Using response message from server
-                        return; // Stop further processing
+                        // If the response indicates an error, mark the editable fields as invalid and show an error message
+                        $(editableFields.join(', ')).addClass('is-invalid');
+                        showAlert('error', response.message); // Display an error alert
+                        return;
                     }
 
-                    // If no error (status == 'success'), reset form and show success message
+                    if (response.status === 'warning') {
+                        // If the response indicates a warning, mark fields that failed validation as invalid
+                        if (response.field.includes('title')) {
+                            $('#issue_title').addClass('is-invalid');
+                            console.log(response.field.includes('title'));
+                        } else {
+                            $('#issue_title').addClass('is-valid'); // If no error, mark it valid
+                            console.log(response.field.includes('title'));
+                        }
+
+                        if (response.field.includes('description')) {
+                            $('#issue_description').addClass('is-invalid');
+                        } else {
+                            $('#issue_description').addClass('is-valid');
+                        }
+
+                        showAlert('warning', response.message); // Display a warning alert
+                        return;
+                    }
+
                     if (response.status === 'success') {
-                        $('#issue_title, #issue_description').removeClass('is-invalid').addClass('is-valid'); // Confirm valid inputs
+                        // If the request was successful, mark the editable fields as valid
+                        $(editableFields.join(', ')).removeClass('is-invalid').addClass('is-valid');
 
-                        // Reset input values
-                        issue_title.value = "";
-                        issue_description.value = "";
+                        // Reset the input values of title and description after successful submission
+                        $('#issue_title, #issue_description').val('');
 
-                        showAlert('success', response.message);  // Success message from server
-                    } else if (response.status === 'warning') {
-                        showAlert('warning', response.message);  // Handle warnings
+                        showAlert('success', response.message); // Display a success alert
                     }
                 },
                 error: function () {
-                    // Handle AJAX errors
-                    $('#issue_title, #issue_description, #issue_operating_system, #issue_view_port_size, #issue_current_page_url')
-                        .removeClass('is-valid')
-                        .addClass('is-invalid');
-
-                    showAlert('error', codess_github_issue_creator.ajax_error);
+                    // Handle AJAX request failure (e.g., network error) by marking the fields as invalid
+                    $(editableFields.join(', ')).addClass('is-invalid');
+                    showAlert('error', codess_github_issue_creator.ajax_error); // Display a generic error alert
                 }
             });
 
-            // Function to show alert message in modal
+            // Function to display alerts inside the modal (success, error, warning messages)
             function showAlert(type, message) {
                 let modal_content = $('#codess-issue-modal > .modal-form');
                 let alertClass;
 
+                // Determine the alert class based on the type of message (success, error, warning)
                 switch (type) {
                     case 'success':
                         alertClass = 'alert-success';
@@ -162,12 +159,13 @@
                         alertClass = 'alert-info';
                 }
 
+                // Append the alert to the modal content
                 modal_content.append('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">'
                     + message +
                     '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'
                     + '</div>');
 
-                // Remove the last alert if there's more than one
+                // Remove the first alert if there are more than one to avoid multiple alerts showing at once
                 if ($('.alert-dismissible').length > 1) {
                     $('.alert-dismissible').first().remove();
                 }
@@ -175,7 +173,5 @@
         });
 
     });
-
-
 
 })(jQuery);

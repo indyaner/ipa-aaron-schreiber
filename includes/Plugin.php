@@ -277,7 +277,7 @@ class Plugin {
                 'reported-issues', // Menu slug
                 array($git_hub_issue, 'codess_backend_page'), // Callback function
                 'dashicons-list-view', // Menu icon
-                80 // Position in the menu
+                300 // Position in the menu
             );
 
         } catch (Exception $e) {

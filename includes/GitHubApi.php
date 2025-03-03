@@ -89,7 +89,7 @@ class GitHubApi {
      * from GitHub. If successful, it returns the login name of the authenticated user. If an error occurs
      * during the API request, the error is logged, and the method returns `false`.
      *
-     * @return array|string|false The login name of the authenticated user as a string,
+     * @return string|false The login name of the authenticated user as a string,
      *                            or `false` if the request fails or an error occurs.
      *
      * @throws RuntimeException If there is an issue with the GitHub API request.
@@ -97,7 +97,7 @@ class GitHubApi {
      *
      * @since 1.0.0-dev
      */
-    public function getAuthenticatedUser(): array|string|false {
+    public function get_authenticated_user(): string|false {
         try {
             // Fetches the authenticated user's details
             return $this->client->api('current_user')->show()['login'];
@@ -121,8 +121,8 @@ class GitHubApi {
      *
      * @param string $title The title of the issue.
      * @param string $body The body/content of the issue.
-     * @param array $labels An array of labels to assign to the issue (optional).
-     * @param array $assignees An array of assignees to assign to the issue (optional).
+     * @param array $labels An array of labels to assign to the issue.
+     * @param array $assignees An array of assignees to assign to the issue.
      *
      * @return bool Returns true if the issue was created successfully, or false if an error occurred.
      *
@@ -132,7 +132,7 @@ class GitHubApi {
      *
      * @since 1.0.0-dev
      */
-    public function createIssue(string $title, string $body, array $labels = [], array $assignees = []): bool {
+    public function create_issue(string $title, string $body, array $labels = [], array $assignees = []): bool {
         // exception handling
         try {
             // creates a new GitHub Issue
@@ -168,7 +168,7 @@ class GitHubApi {
      *
      * @since 1.0.0-dev
      */
-    public function closeIssue(int $issueId): bool {
+    public function close_issue(int $issueId): bool {
         try {
             // Attempt to close the issue using the GitHub API
             $this->client->api('issue')->update($this->owner, $this->repo, $issueId, [
@@ -197,7 +197,7 @@ class GitHubApi {
      *
      * @since 1.0.0-dev
      */
-    public function getOpenIssues(string $label): array|false {
+    public function get_open_issues(string $label): array|false {
         // exception handling
         try {
             // Fetch issues filtered by the provided label

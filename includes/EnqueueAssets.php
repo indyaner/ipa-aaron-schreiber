@@ -41,14 +41,7 @@ class EnqueueAssets {
         wp_localize_script('codess-github-issue-creator-scripts', 'codess_github_issue_creator',
             [
                 'confirm_close_message' => __('Are you sure you want to close this issue?', 'codess-github-issue-creator'),
-                'title_error' => __('Title must be between 3 and 30 characters.', 'codess-github-issue-creator'),
-                'description_error' => __('Description must be between 3 and 300 characters.', 'codess-github-issue-creator'),
-                'field_warning' => __('Please fill out the Form', 'codess-github-issue-creator'),
-                'title_warning' => __('Please fill out the Title field!', 'codess-github-issue-creator'),
-                'description_warning' => __('Please fill out the Description field!', 'codess-github-issue-creator'),
-                'title_success' => __('Title is correct!', 'codess-github-issue-creator'),
-                'description_success' => __('Description is correct!', 'codess-github-issue-creator'),
-                'malicious_error'       => __('Your input contains invalid or malicious content.', 'codess-github-issue-creator'),
+                'ajax_error' => __('An error occurred while processing your request. Please try again later.', 'codess-github-issue-creator'),
             ]
         );
 
@@ -80,14 +73,7 @@ class EnqueueAssets {
         wp_localize_script('codess-github-issue-creator-admin-scripts', 'codess_github_issue_creator',
             [
                 'confirm_close_message' => __('Are you sure you want to close this issue?', 'codess-github-issue-creator'),
-                'title_error' => __('Title must be between 3 and 30 characters.', 'codess-github-issue-creator'),
-                'description_error' => __('Description must be between 3 and 300 characters.', 'codess-github-issue-creator'),
-                'field_warning' => __('Please fill out the Form', 'codess-github-issue-creator'),
-                'title_warning' => __('Please fill out the Title field!', 'codess-github-issue-creator'),
-                'description_warning' => __('Please fill out the Description field!', 'codess-github-issue-creator'),
-                'title_success' => __('Title is correct!', 'codess-github-issue-creator'),
-                'description_success' => __('Description is correct!', 'codess-github-issue-creator'),
-                'malicious_error'       => __('Your input contains invalid or malicious content.', 'codess-github-issue-creator'),
+                'ajax_error' => __('An error occurred while processing your request. Please try again later.', 'codess-github-issue-creator'),
             ]
         );
 

@@ -1,44 +1,49 @@
 import 'bootstrap';
+
 (function ($) {
     jQuery(document).ready(function ($) {
-        // Add event listener for delete buttons
-        $('.delete-issue').on('click', function () {
-            const issueId = $(this).data('issue-id'); // Get issue ID from data attribute
+        // Add event listener for the "close-issue" buttons (delete buttons for issues)
+        $('.close-issue').on('click', function () {
+            const issueId = $(this).data('issue-id'); // Retrieve the issue ID stored in the data attribute of the clicked button
 
-            // Confirm if the user really wants to delete
+            // Confirm with the user if they are sure about deleting the issue
             if (confirm(codess_github_issue_close.confirm_close_message)) {
+                // Prepare the data to be sent to the server for closing the issue
                 let formData = {
-                    action: 'close_issue', // action hook
-                    nonce: close_ajax.nonce, // Include nonce for security
-                    issue_id: issueId, // Issue ID from the clicked delete button
+                    action: 'close_issue', // WordPress action hook to handle the issue close
+                    nonce: close_ajax.nonce, // Security nonce to prevent CSRF attacks
+                    issue_id: issueId, // The ID of the issue being closed (from the clicked button)
                 };
 
+                // Make an AJAX request to close the issue
                 $.ajax({
-                    url: close_ajax.ajax_url, // WordPress admin-ajax URL
-                    method: 'POST',
-                    data: formData,
+                    url: close_ajax.ajax_url, // The WordPress admin-ajax URL
+                    method: 'POST', // Use the POST method for sending data
+                    data: formData, // Send the form data (action, nonce, issue ID)
                     success: function (response) {
-                        // Handle success response
+                        // Handle the successful response from the server
                         if (response.status === 'success') {
-                            // Try to remove the issue card with the correct ID
+                            // If the issue is closed successfully, fade out the corresponding issue card
                             $('#collapse-' + issueId).fadeOut(500, function () {
-                                $(this).remove(); // Remove the issue from the DOM after fading out
+                                $(this).remove(); // Remove the issue card from the DOM after it fades out
                             });
                         } else if (response.status === 'error') {
-                            showAlert('error', response.message); // Error: Show error message
+                            // If there is an error with the closure, show the error message
+                            showAlert('error', response.message); // Display the error message
                         }
                     },
                     error: function (response) {
-                        // Handle error response
-                        showAlert('error', 'Error: ' + response.responseText); // Show error if AJAX fails
+                        // Handle any error response from the AJAX request (e.g., network error)
+                        showAlert('error', 'Error: ' + response.responseText); // Display a generic error message
                     }
                 });
             }
         });
 
-        // Function to show alert messages
+        // Function to display alert messages (success, error, or other types)
         function showAlert(type, message) {
-            // Display the message using the standard JavaScript alert function
+            // For now, simply display the message using the browser's default alert box
+            // This could be replaced with a custom alert/modal in the future if needed
             alert(message);
         }
     });
