@@ -37,10 +37,10 @@ mix.setPublicPath( `${ pluginPath }/assets` );
  * Set your entry points for SCSS compiling
  * {@link https://laravel-mix.com/docs/6.0/sass}
  */
-mix.sass( `${ resources }/scss/styles.scss`, `${ pluginPath }/assets/css` )
+mix.sass( `${ resources }/scss/custom_bootstrap.scss`, `${ pluginPath }/assets/css` )
 	.options( { processCssUrls: false } )
 	.sourceMaps();
-mix.sass( `${ resources }/scss/admin-styles.scss`, `${ pluginPath }/assets/css` )
+mix.sass( `${ resources }/scss/custom_styles.scss`, `${ pluginPath }/assets/css` )
 	.options( { processCssUrls: false } )
 	.sourceMaps();
 
@@ -48,5 +48,5 @@ mix.sass( `${ resources }/scss/admin-styles.scss`, `${ pluginPath }/assets/css` 
  * Set your entry points for JS bundling
  * {@link https://laravel-mix.com/docs/6.0/mixjs}
  */
-mix.js( `${ resources }/js/scripts.js`, `${ pluginPath }/assets/js` );
-mix.js( `${ resources }/js/admin-scripts.js`, `${ pluginPath }/assets/js` );
+mix.js( `${ resources }/js/issue_create_modal.js`, `${ pluginPath }/assets/js` );
+mix.js( `${ resources }/js/issue_close_entry.js`, `${ pluginPath }/assets/js` );

@@ -27,5 +27,6 @@ class I18n {
      */
     public function set_script_translations(): void {
         wp_set_script_translations( 'codess-github-issue-creator-scripts', 'codess-github-issue-creator', plugin_dir_path( dirname( __FILE__ ) ) . 'languages/' );
+
     }
 }
