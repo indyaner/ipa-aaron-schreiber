@@ -10,7 +10,7 @@ use Github\Exception\MissingArgumentException;
 use Github\Exception\RuntimeException;
 
 /**
- * GitHubApi class
+ * IssueManager class
  *
  * This class provides a simple interface to interact with the GitHub API using a Personal Access Token (PAT).
  * It allows various GitHub-related operations, including authentication, issue creation, fetching user details,
@@ -22,7 +22,7 @@ use Github\Exception\RuntimeException;
  *
  * @since 1.0.0
  */
-class GitHubApi {
+class IssueManager {
 
     /**
      * @var string The GitHub Personal Access Token (PAT) used for authentication.

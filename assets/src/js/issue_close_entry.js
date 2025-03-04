@@ -9,7 +9,7 @@ import 'bootstrap';
             // Confirm with the user if they are sure about deleting the issue
             if (confirm(codess_github_issue_close.confirm_close_message)) {
                 // Prepare the data to be sent to the server for closing the issue
-                let formData = {
+                const formData = {
                     action: 'close_issue', // WordPress action hook to handle the issue close
                     nonce: close_ajax.nonce, // Security nonce to prevent CSRF attacks
                     issue_id: issueId, // The ID of the issue being closed (from the clicked button)

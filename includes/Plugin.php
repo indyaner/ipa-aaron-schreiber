@@ -37,6 +37,7 @@ class Plugin {
     /**
      * Define the core functionality of the plugin.
      *
+     * @throws Exception
      */
     public function __construct() {
         if (defined('CODESS_GITHUB_ISSUE_CREATOR_VERSION')) {
@@ -57,7 +58,6 @@ class Plugin {
         $this->define_rest_hooks();
         $this->define_admin_hooks();
         $this->define_enqueue_hooks();
-        $this->define_activation_hooks();
 
 
     }
@@ -167,32 +167,6 @@ class Plugin {
 
 
     /**
-     * Registers the activation hook for the plugin.
-     *
-     * This method is used to register a custom activation hook for the plugin. It ensures that when the plugin is
-     * activated, the necessary capabilities are registered. The activation process occurs after the theme has been set up.
-     *
-     * @return void
-     *
-     * @throws Exception If there is an error while registering capabilities.
-     *
-     * @since 1.0.0-dev
-     */
-    private function define_activation_hooks(): void {
-        try {
-            // Create an instance of the Activator class to handle the registration of capabilities
-            $activator = new Activator();
-
-            // Register the action hook that will trigger the 'register_capabilities' method
-            $this->loader->add_action('after_setup_theme', $activator, 'register_capabilities');
-        } catch (Exception $e) {
-            // Handle exceptions by logging the error and possibly showing a message to the user
-            error_log('Error registering activation hooks: ' . $e->getMessage());
-        }
-    }
-
-
-    /**
      * Runs the loader to execute all the registered hooks with WordPress.
      *
      * This method triggers the execution of all hooks that have been registered in the loader. It is responsible
@@ -230,8 +204,8 @@ class Plugin {
      */
     function admin_bar_item(WP_Admin_Bar $admin_bar): void {
         try {
-            // Check if the user has the 'manage_options' capability
-            if (!current_user_can('manage_options')) {
+            // Check if the user has the 'manage_github_api_issues' capability
+            if (!current_user_can('manage_github_api_issues')) {
                 return;
             }
 
@@ -256,7 +230,7 @@ class Plugin {
      * Adds a custom admin menu page to the WordPress admin panel for viewing reported issues.
      *
      * This function adds a menu page under the admin menu to view the reported issues via the `GitHubIssue` class.
-     * The page is accessible to users with the 'manage_options' capability (administrator and editor). The menu page will
+     * The page is accessible to users with the 'manage_github_api_issues' capability (administrator and editor). The menu page will
      * use the `codess_backend_page` method of the `GitHubIssue` class to display the issues.
      *
      * @return void
@@ -273,7 +247,7 @@ class Plugin {
             add_menu_page(
                 __('Reported Issues', 'codess-github-issue-creator'), // Page title
                 __('Reported Issues', 'codess-github-issue-creator'), // Menu title
-                'manage_options', // Capability
+                'manage_github_api_issues', // Capability
                 'reported-issues', // Menu slug
                 array($git_hub_issue, 'codess_backend_page'), // Callback function
                 'dashicons-list-view', // Menu icon

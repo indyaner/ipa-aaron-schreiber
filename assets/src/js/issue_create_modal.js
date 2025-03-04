@@ -74,7 +74,7 @@
             event.preventDefault(); // Prevent the default form submission
 
             // Collect form data (both visible and hidden fields)
-            let formData = {
+            const formData = {
                 action: 'create_issue', // The action to be handled by the server (AJAX action hook)
                 nonce: modal_ajax.nonce, // A security token (nonce) to prevent CSRF attacks
                 title: issue_title.value.trim(), // Trim the title value to remove extra spaces
@@ -106,10 +106,8 @@
                         // If the response indicates a warning, mark fields that failed validation as invalid
                         if (response.field.includes('title')) {
                             $('#issue_title').addClass('is-invalid');
-                            console.log(response.field.includes('title'));
                         } else {
                             $('#issue_title').addClass('is-valid'); // If no error, mark it valid
-                            console.log(response.field.includes('title'));
                         }
 
                         if (response.field.includes('description')) {

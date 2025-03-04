@@ -30,6 +30,8 @@ class Activator {
         $plugin_activator = new Activator();
         $current_version = $plugin_activator->get_version();
 
+        self::register_capabilities();
+
         if (!$current_version) {
             // Set plugin version in options
             $plugin_activator->set_version();
