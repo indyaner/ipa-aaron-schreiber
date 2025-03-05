@@ -26,6 +26,9 @@ class Validation {
      * @param array $post The POST data to be sanitized.
      *
      * @return array The sanitized POST data with all harmful content stripped out.
+     *
+     * @throws Exception If there is an Exception error.
+     * @throws RuntimeException If there is a RuntimeException error.
      */
     function sanitize_post(array $post): array {
 
@@ -74,12 +77,12 @@ class Validation {
      * @param string $input The input string that needs sanitization.
      *
      * @return string The sanitized string, with all dangerous content removed.
+     *
+     * @throws Exception If there is an Exception error.
+     * @throws RuntimeException If there is a RuntimeException error.
      */
     function strip_input_content(string $input): string {
-
         try {
-
-
             // Remove JavaScript event attributes like "onclick", "onload", etc.
             $input = preg_replace('/\s*on\w+\s*=\s*[^>]+/is', '', $input);
 

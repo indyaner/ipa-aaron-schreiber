@@ -32,6 +32,7 @@ class GitHubIssue {
      *
      * @return void
      * @throws Exception If an unexpected error occurs during execution.
+     * @throws RuntimeException If there is a RuntimeException error.
      */
     #[NoReturn] public function create(): void {
         try {
@@ -150,6 +151,7 @@ class GitHubIssue {
      * user is authenticated and then attempts to close the issue using the provided issue ID.
      *
      * @throws Exception If there is an issue with the GitHub API request.
+     * @throws RuntimeException If there is a RuntimeException error.
      */
     #[NoReturn] public function close(): void {
         try {
@@ -198,6 +200,7 @@ class GitHubIssue {
      *
      * @return void
      * @throws Exception If there is an error while fetching issues from GitHub.
+     * @throws RuntimeException If there is a RuntimeException error.
      */
     public function codess_backend_page(): void {
         try {

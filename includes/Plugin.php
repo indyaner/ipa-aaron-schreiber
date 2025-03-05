@@ -245,8 +245,8 @@ class Plugin {
 
             // Add the custom menu page to the WordPress admin menu
             add_menu_page(
-                __('Reported Issues', 'codess-github-issue-creator'), // Page title
-                __('Reported Issues', 'codess-github-issue-creator'), // Menu title
+                __('Reported Bug Reports', 'codess-github-issue-creator'), // Page title
+                __('Reported Bug Reports', 'codess-github-issue-creator'), // Menu title
                 'manage_github_api_issues', // Capability
                 'reported-issues', // Menu slug
                 array($git_hub_issue, 'codess_backend_page'), // Callback function
@@ -297,6 +297,8 @@ class Plugin {
                                        class="form-label form_reuqired_asterisk"><?= __('Bug Report Title', 'codess-github-issue-creator') ?></label>
                                 <input id="issue_title" type="text" name="title" class="form-control"
                                        placeholder="<?= __('Enter the bug title', 'codess-github-issue-creator') ?>..." required>
+                                <p class="text-muted"><?= __('Please enter between 3 and 50 characters.', 'codess-github-issue-creator') ?></p>
+
                             </div>
 
                             <div class="mb-3">
@@ -304,7 +306,7 @@ class Plugin {
                                        class="form-label form_reuqired_asterisk"><?= __('Description', 'codess-github-issue-creator') ?></label>
                                 <textarea id="issue_description" name="description" class="form-control" rows="4"
                                           placeholder="<?= __('Describe the bug', 'codess-github-issue-creator') ?>..." required></textarea>
-
+                                <p class="text-muted"><?= __('Please enter between 3 and 300 characters.', 'codess-github-issue-creator') ?></p>
                             </div>
 
                             <!-- Hidden Inputs -->
