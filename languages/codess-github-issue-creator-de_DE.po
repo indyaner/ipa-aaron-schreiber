@@ -1,0 +1,162 @@
+# Copyright (C) 2025 Codess media GmbH
+# This file is distributed under the Copyright.
+msgid ""
+msgstr ""
+"Project-Id-Version: Codess GitHub Issue Creator 1.0.0-dev\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: \n"
+"Language-Team: Deutsch\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-21T14:29:55+01:00\n"
+"PO-Revision-Date: 2025-03-05 07:03+0000\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: codess-github-issue-creator\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Loco-Version: 2.7.1; wp-6.7.2"
+
+#: includes/EnqueueAssets.php:44 includes/EnqueueAssets.php:76
+msgid ""
+"An error occurred while processing your request. Please try again later."
+msgstr ""
+"Bei der Verarbeitung Ihrer Anfrage ist ein Fehler aufgetreten. Bitte "
+"versuchen Sie es später noch einmal."
+
+#: includes/EnqueueAssets.php:43 includes/EnqueueAssets.php:75
+#: includes/EnqueueAssets.php:83
+msgid "Are you sure you want to close this issue?"
+msgstr "Möchten Sie dieses Issue wirklich schließen?"
+
+#: includes/GitHubIssue.php:110 includes/GitHubIssue.php:169
+msgid "Authentication failed. Please try again."
+msgstr "Authentifizierung fehlgeschlagen. Bitte versuchen Sie es erneut."
+
+#: includes/GitHubIssue.php:119
+msgid "Bug report created successfully!"
+msgstr "Fehlerbericht erfolgreich erstellt!"
+
+#: includes/Plugin.php:297
+msgid "Bug Report Title"
+msgstr "Titel des Fehlerberichts"
+
+#: includes/GitHubIssue.php:103
+#, fuzzy
+#| msgid "Called up Page Url:"
+msgid "Called up Page URL:"
+msgstr "Aufgerufene Seiten-URL:"
+
+#: includes/GitHubIssue.php:249
+msgid "Close Bug Report"
+msgstr "Fehlerbericht schliessen"
+
+#. Name of the plugin
+msgid "Codess GitHub Issue Creator"
+msgstr ""
+
+#. Author of the plugin
+msgid "Codess media GmbH"
+msgstr ""
+
+#: includes/Plugin.php:308
+#| msgid "Describe the bug..."
+msgid "Describe the bug"
+msgstr "Beschreiben Sie den Fehler"
+
+#: includes/Plugin.php:306
+msgid "Description"
+msgstr "Beschreibung"
+
+#: includes/GitHubIssue.php:86
+msgid "Description must be between 3 and 300 characters!"
+msgstr "Die Beschreibung muss zwischen 3 und 300 Zeichen lang sein!"
+
+#: includes/Plugin.php:299
+#| msgid "Enter the bug title..."
+msgid "Enter the bug title"
+msgstr "Geben Sie den Fehlertitel ein"
+
+#: includes/Plugin.php:293
+msgid "Fill out this form to report a new Bug to Codess."
+msgstr ""
+"Füllen Sie dieses Formular aus, um Codess einen neuen Fehler zu melden."
+
+#. Description of the plugin
+msgid ""
+"Für das erstellen und die ansicht von GitHub issues, über die GitHub API."
+msgstr ""
+"Für das Erstellen und die Ansicht von GitHub Issues, über die GitHub API."
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://codess.media"
+msgstr ""
+
+#: includes/GitHubIssue.php:258
+msgid "No open bug reports found."
+msgstr "Keine offenen Fehlerberichte gefunden."
+
+#: includes/GitHubIssue.php:99
+msgid "Operating System and Browser:"
+msgstr "Betriebssystem und Browser:"
+
+#: includes/Plugin.php:309
+msgid "Please enter between 3 and 300 characters."
+msgstr "Bitte geben Sie zwischen 3 und 300 Zeichen ein."
+
+#: includes/Plugin.php:300
+msgid "Please enter between 3 and 50 characters."
+msgstr "Bitte geben Sie zwischen 3 und 50 Zeichen ein."
+
+#: includes/GitHubIssue.php:76
+msgid "Please fill out the Description field!"
+msgstr "Bitte füllen Sie das Feld Beschreibung aus!"
+
+#: includes/GitHubIssue.php:66
+msgid "Please fill out the form"
+msgstr "Bitte füllen Sie das Formular aus"
+
+#: includes/GitHubIssue.php:71
+msgid "Please fill out the Title field!"
+msgstr "Bitte füllen Sie das Feld Titel aus!"
+
+#: includes/Plugin.php:215 includes/Plugin.php:218 includes/Plugin.php:287
+#: includes/Plugin.php:321
+msgid "Report Bug"
+msgstr "Fehler melden"
+
+#. Page title
+#: includes/Plugin.php:248 includes/Plugin.php:249 includes/GitHubIssue.php:217
+msgid "Reported Bug Reports"
+msgstr "Gemeldete Fehlerberichte"
+
+#: includes/GitHubIssue.php:180
+#| msgid "There was an error closing the issue!"
+msgid "There was an error closing the bug report!"
+msgstr "Beim Schliessen des Fehlerberichts ist ein Fehler aufgetreten!"
+
+#: includes/GitHubIssue.php:119
+msgid "There was an error creating the issue!"
+msgstr "Beim Erstellen des Issues ist ein Fehler aufgetreten!"
+
+#: includes/GitHubIssue.php:44
+#| msgid "There was an error with the nonce security check!"
+msgid "There was an error with the security check!"
+msgstr "Bei der Sicherheitsüberprüfung ist ein Fehler aufgetreten!"
+
+#: includes/GitHubIssue.php:81
+msgid "Title must be between 3 and 50 characters!"
+msgstr "Der Titel muss zwischen 3 und 50 Zeichen lang sein!"
+
+#: includes/GitHubIssue.php:100
+msgid "Viewport Size:"
+msgstr "Viewport grösse:"
+
+#: includes/GitHubIssue.php:102
+msgid "WP User Email:"
+msgstr "WP-Benutzer-E-Mail:"
+
+#: includes/GitHubIssue.php:101
+msgid "WP User Username:"
+msgstr "WP-Benutzer Benutzername:"
