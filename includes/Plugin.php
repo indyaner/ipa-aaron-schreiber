@@ -58,8 +58,6 @@ class Plugin {
         $this->define_rest_hooks();
         $this->define_admin_hooks();
         $this->define_enqueue_hooks();
-
-
     }
 
     /**
@@ -99,19 +97,18 @@ class Plugin {
         // Define admin related hooks
         $this->loader->add_action('admin_bar_menu', $this, 'admin_bar_item', 500);
 
-        // can only be used in the wp frontend
+        // Can only be used in the wp frontend
         $this->loader->add_action('wp_footer', $this, 'add_admin_bar_modal');
 
-        // can only be used in the wp backend
+        // Can only be used in the wp backend
         $this->loader->add_action('admin_footer', $this, 'add_admin_bar_modal');
 
-        //
+        // Add admin menu
         $this->loader->add_action('admin_menu', $this, 'codess_add_admin_menu');
 
-
+        // Ajax hooks
         $git_hub_issue = new GitHubIssue();
         add_action('wp_ajax_create_issue', array($git_hub_issue, 'create'));
-
         add_action('wp_ajax_close_issue', array($git_hub_issue, 'close'));
 
     }
@@ -280,42 +277,33 @@ class Plugin {
             <dialog id="codess-issue-modal">
                 <form class="modal-form" action="">
                     <div class="modal-content codess-modal-content">
-
-                        <!-- Modal Header -->
                         <div class="modal-header d-flex justify-content-between align-items-start">
                             <h5 class="modal-title mb-3"
                                 id="modalTitle"><?= __('Report Bug', 'codess-github-issue-creator') ?></h5>
                             <button type="button" class="btn-close codess-close"></button>
                         </div>
-
-                        <!-- Modal Body -->
                         <div class="modal-body">
                             <p class="text-muted"><?= __('Fill out this form to report a new Bug to Codess.', 'codess-github-issue-creator') ?></p>
-
                             <div class="mb-3">
                                 <label for="issue_title"
                                        class="form-label form_reuqired_asterisk"><?= __('Bug Report Title', 'codess-github-issue-creator') ?></label>
                                 <input id="issue_title" type="text" name="title" class="form-control"
-                                       placeholder="<?= __('Enter the bug title', 'codess-github-issue-creator') ?>..." required>
+                                       placeholder="<?= __('Enter the bug title', 'codess-github-issue-creator') ?>..."
+                                       required>
                                 <p class="text-muted"><?= __('Please enter between 3 and 50 characters.', 'codess-github-issue-creator') ?></p>
-
                             </div>
-
                             <div class="mb-3">
                                 <label for="issue_description"
                                        class="form-label form_reuqired_asterisk"><?= __('Description', 'codess-github-issue-creator') ?></label>
                                 <textarea id="issue_description" name="description" class="form-control" rows="4"
-                                          placeholder="<?= __('Describe the bug', 'codess-github-issue-creator') ?>..." required></textarea>
+                                          placeholder="<?= __('Describe the bug', 'codess-github-issue-creator') ?>..."
+                                          required></textarea>
                                 <p class="text-muted"><?= __('Please enter between 3 and 300 characters.', 'codess-github-issue-creator') ?></p>
                             </div>
-
-                            <!-- Hidden Inputs -->
                             <input id="issue_operating_system" type="hidden" name="operating_system" value="">
                             <input id="issue_view_port_size" type="hidden" name="view_port_size" value="">
                             <input id="issue_current_page_url" type="hidden" name="current_page_url" value="">
                         </div>
-
-                        <!-- Modal Footer -->
                         <div class="modal-footer mb-3">
                             <button type="submit" id="submit_btn_modal"
                                     class="btn btn-primary"><?= __('Report Bug', 'codess-github-issue-creator') ?></button>

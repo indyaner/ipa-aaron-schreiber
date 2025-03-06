@@ -52,9 +52,12 @@ class GitHubIssue {
                 $description = $post['description'] ?? '';
                 $response = [];
 
+                // Append 'title' to 'field'
                 if (empty($title) || strlen($title) < 3 || strlen($title) > 50) {
-                    $response['field'][] = 'title'; // Append 'title' to 'field'
+                    $response['field'][] = 'title';
                 }
+
+                // Append 'description' to 'field'
                 if (empty($description) || strlen($description) < 3 || strlen($description) > 50) {
                     $response['field'][] = 'description';
                 }
@@ -205,6 +208,18 @@ class GitHubIssue {
     public function codess_backend_page(): void {
         try {
 
+            // Check if all constants are defined and if not output an error
+            $constants = ['GITHUB_PAT', 'GITHUB_OWNER', 'GITHUB_REPOSITORY', 'GITHUB_LABEL'];
+            foreach ($constants as $constant) {
+                if (!defined($constant)) {
+                    ?>
+                    <h2><?= __('Error: Not all require constants are defined. Check the README.md', 'codess-github-issue-creator'); ?></h2>
+                    <?php
+                    error_log($constant . " is not defined!\n");
+                    exit;
+                }
+            }
+
             $github = new IssueManager();
 
             // Fetch open issues with a specific label from GitHub
@@ -227,7 +242,6 @@ class GitHubIssue {
                                 $heading_id = 'heading-' . $issue['number'];
                                 ?>
                                 <div class="accordion bg-light mb-3" id="<?= $collapse_id; ?>">
-                                    <!-- Issue Title -->
                                     <h2 class="accordion-header bg-info" id="<?= $heading_id; ?>">
                                         <button class="accordion-button collapsed" type="button"
                                                 aria-expanded="<?= $index === 0 ? 'true' : 'false'; ?>"
@@ -236,14 +250,10 @@ class GitHubIssue {
                                             <?= esc_html($issue['title']); ?>
                                         </button>
                                     </h2>
-
-                                    <!-- Issue Description & Close Button -->
                                     <div class="accordion-collapse collapse" aria-labelledby="<?= $heading_id; ?>"
                                          data-bs-parent="#issuesAccordion">
                                         <div class="accordion-body">
                                             <p class="card-text"><?= esc_html($issue['body']); ?></p>
-
-                                            <!-- Button to close the issue -->
                                             <button class="btn btn-danger close-issue"
                                                     data-issue-id="<?= esc_attr($issue['number']); ?>">
                                                 <?= __('Close Bug Report', 'codess-github-issue-creator') ?>

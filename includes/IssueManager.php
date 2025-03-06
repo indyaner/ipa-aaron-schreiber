@@ -90,7 +90,7 @@ class IssueManager {
      * during the API request, the error is logged, and the method returns `false`.
      *
      * @return string|false The login name of the authenticated user as a string,
-     *                            or `false` if the request fails or an error occurs.
+     *                      or `false` if the request fails or an error occurs.
      *
      * @throws RuntimeException If there is an issue with the GitHub API request.
      * @throws Exception If any unexpected error occurs while fetching user details.
@@ -99,7 +99,7 @@ class IssueManager {
      */
     public function get_authenticated_user(): string|false {
         try {
-            // Fetches the authenticated user's details
+            // Fetches the authenticated users details
             return $this->client->api('current_user')->show()['login'];
         } catch (RuntimeException $e) {
             // Logs any GitHub API-related errors
@@ -120,7 +120,7 @@ class IssueManager {
      * exceptions that occur during the API request. If an error occurs, it will be logged for debugging.
      *
      * @param string $title The title of the issue.
-     * @param string $body The body/content of the issue.
+     * @param string $body The body of the issue.
      * @param array $labels An array of labels to assign to the issue.
      * @param array $assignees An array of assignees to assign to the issue.
      *
@@ -133,22 +133,22 @@ class IssueManager {
      * @since 1.0.0-dev
      */
     public function create_issue(string $title, string $body, array $labels = [], array $assignees = []): bool {
-        // exception handling
+        // Exception handling
         try {
-            // creates a new GitHub Issue
+            // Creates a new GitHub Issue
             $this->client->api('issue')->create($this->owner, $this->repo, [
                 'title' => $title,
                 'body' => $body,
                 'labels' => $labels,
                 'assignees' => $assignees,
             ]);
-            return true; // return true if no exceptions were thrown above
+            return true; // Return true if no exceptions were thrown above
         } catch (MissingArgumentException $e) {
-            error_log("Missing Argument error: " . $e->getMessage()); // logs the missing arguments internally
+            error_log("Missing Argument error: " . $e->getMessage());
         } catch (RuntimeException $e) {
-            error_log("GitHub API error: " . $e->getMessage()); // logs the API error internally
+            error_log("GitHub API error: " . $e->getMessage());
         } catch (Exception $e) {
-            error_log("Unexpected error: " . $e->getMessage()); // catches any other issues
+            error_log("Unexpected error: " . $e->getMessage());
         }
         return false; // always return false if an error occurs
     }
