@@ -10,24 +10,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-21T14:29:55+01:00\n"
-"PO-Revision-Date: 2025-03-06 16:05+0000\n"
+"PO-Revision-Date: 2025-03-06 16:02+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: codess-github-issue-creator\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Loco-Version: 2.7.1; wp-6.7.2"
 
-#: includes/EnqueueAssets.php:43 includes/EnqueueAssets.php:74
+#: includes/EnqueueAssets.php:44 includes/EnqueueAssets.php:76
 msgid ""
 "An error occurred while processing your request. Please try again later."
 msgstr ""
 "Bei der Verarbeitung Ihrer Anfrage ist ein Fehler aufgetreten. Bitte "
 "versuchen Sie es später noch einmal."
 
-#: includes/EnqueueAssets.php:81
-#| msgid "Are you sure you want to close this issue?"
-msgid "Are you sure you want to close this bug report?"
-msgstr "Möchten Sie diesen Fehlerbericht wirklich schließen?"
+#: includes/EnqueueAssets.php:43 includes/EnqueueAssets.php:75
+#: includes/EnqueueAssets.php:83
+msgid "Are you sure you want to close this issue?"
+msgstr "Möchten Sie dieses Issue wirklich schließen?"
 
 #: includes/GitHubIssue.php:113 includes/GitHubIssue.php:172
 msgid "Authentication failed. Please try again."
@@ -142,9 +142,8 @@ msgid "There was an error closing the bug report!"
 msgstr "Beim Schliessen des Fehlerberichts ist ein Fehler aufgetreten!"
 
 #: includes/GitHubIssue.php:122
-#| msgid "There was an error creating the issue!"
-msgid "There was an error creating the bug report!"
-msgstr "Beim Erstellen des Fehlerberichts ist ein Fehler aufgetreten!"
+msgid "There was an error creating the issue!"
+msgstr "Beim Erstellen des Issues ist ein Fehler aufgetreten!"
 
 #: includes/GitHubIssue.php:44
 #| msgid "There was an error with the nonce security check!"

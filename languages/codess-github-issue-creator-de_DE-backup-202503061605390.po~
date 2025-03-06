@@ -10,44 +10,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-21T14:29:55+01:00\n"
-"PO-Revision-Date: 2025-03-03 15:44+0000\n"
+"PO-Revision-Date: 2025-03-06 16:05+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: codess-github-issue-creator\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Loco-Version: 2.7.1; wp-6.7.2"
 
-#: includes/EnqueueAssets.php:44 includes/EnqueueAssets.php:76
+#: includes/EnqueueAssets.php:43 includes/EnqueueAssets.php:74
 msgid ""
 "An error occurred while processing your request. Please try again later."
 msgstr ""
 "Bei der Verarbeitung Ihrer Anfrage ist ein Fehler aufgetreten. Bitte "
 "versuchen Sie es später noch einmal."
 
-#: includes/EnqueueAssets.php:43 includes/EnqueueAssets.php:75
-#: includes/EnqueueAssets.php:83
-msgid "Are you sure you want to close this issue?"
+#: includes/EnqueueAssets.php:81
+#, fuzzy
+#| msgid "Are you sure you want to close this issue?"
+msgid "Are you sure you want to close this bug report?"
 msgstr "Möchten Sie dieses Issue wirklich schließen?"
 
-#: includes/GitHubIssue.php:108 includes/GitHubIssue.php:153
+#: includes/GitHubIssue.php:113 includes/GitHubIssue.php:172
 msgid "Authentication failed. Please try again."
 msgstr "Authentifizierung fehlgeschlagen. Bitte versuchen Sie es erneut."
 
-#: includes/GitHubIssue.php:117
+#: includes/GitHubIssue.php:122
 msgid "Bug report created successfully!"
 msgstr "Fehlerbericht erfolgreich erstellt!"
 
-#: includes/Plugin.php:323
+#: includes/Plugin.php:289
 msgid "Bug Report Title"
 msgstr "Titel des Fehlerberichts"
 
-#: includes/GitHubIssue.php:101
-#, fuzzy
+#: includes/GitHubIssue.php:106
 #| msgid "Called up Page Url:"
 msgid "Called up Page URL:"
 msgstr "Aufgerufene Seiten-URL:"
 
-#: includes/GitHubIssue.php:225
+#: includes/GitHubIssue.php:259
 msgid "Close Bug Report"
 msgstr "Fehlerbericht schliessen"
 
@@ -59,25 +59,31 @@ msgstr ""
 msgid "Codess media GmbH"
 msgstr ""
 
-#: includes/Plugin.php:332
+#: includes/Plugin.php:299
 #| msgid "Describe the bug..."
 msgid "Describe the bug"
 msgstr "Beschreiben Sie den Fehler"
 
-#: includes/Plugin.php:330
+#: includes/Plugin.php:297
 msgid "Description"
 msgstr "Beschreibung"
 
-#: includes/GitHubIssue.php:84
+#: includes/GitHubIssue.php:89
 msgid "Description must be between 3 and 300 characters!"
 msgstr "Die Beschreibung muss zwischen 3 und 300 Zeichen lang sein!"
 
-#: includes/Plugin.php:325
+#: includes/Plugin.php:291
 #| msgid "Enter the bug title..."
 msgid "Enter the bug title"
 msgstr "Geben Sie den Fehlertitel ein"
 
-#: includes/Plugin.php:319
+#: includes/GitHubIssue.php:216
+msgid "Error: Not all require constants are defined. Check the README.md"
+msgstr ""
+"Fehler: Nicht alle erforderlichen Konstanten sind definiert. Überprüfen Sie "
+"die README.md"
+
+#: includes/Plugin.php:286
 msgid "Fill out this form to report a new Bug to Codess."
 msgstr ""
 "Füllen Sie dieses Formular aus, um Codess einen neuen Fehler zu melden."
@@ -93,66 +99,72 @@ msgstr ""
 msgid "https://codess.media"
 msgstr ""
 
-#: includes/GitHubIssue.php:234
+#: includes/GitHubIssue.php:268
 msgid "No open bug reports found."
 msgstr "Keine offenen Fehlerberichte gefunden."
 
-#: includes/GitHubIssue.php:97
+#: includes/GitHubIssue.php:102
 msgid "Operating System and Browser:"
 msgstr "Betriebssystem und Browser:"
 
-#: includes/GitHubIssue.php:74
+#: includes/Plugin.php:301
+msgid "Please enter between 3 and 300 characters."
+msgstr "Bitte geben Sie zwischen 3 und 300 Zeichen ein."
+
+#: includes/Plugin.php:293
+msgid "Please enter between 3 and 50 characters."
+msgstr "Bitte geben Sie zwischen 3 und 50 Zeichen ein."
+
+#: includes/GitHubIssue.php:79
 msgid "Please fill out the Description field!"
 msgstr "Bitte füllen Sie das Feld Beschreibung aus!"
 
-#: includes/GitHubIssue.php:64
+#: includes/GitHubIssue.php:69
 msgid "Please fill out the form"
 msgstr "Bitte füllen Sie das Formular aus"
 
-#: includes/GitHubIssue.php:69
+#: includes/GitHubIssue.php:74
 msgid "Please fill out the Title field!"
 msgstr "Bitte füllen Sie das Feld Titel aus!"
 
-#: includes/Plugin.php:241 includes/Plugin.php:244 includes/Plugin.php:313
-#: includes/Plugin.php:345
+#: includes/Plugin.php:212 includes/Plugin.php:215 includes/Plugin.php:282
+#: includes/Plugin.php:309
 msgid "Report Bug"
 msgstr "Fehler melden"
 
-#: includes/GitHubIssue.php:193
+#. Page title
+#: includes/Plugin.php:245 includes/Plugin.php:246 includes/GitHubIssue.php:232
 msgid "Reported Bug Reports"
 msgstr "Gemeldete Fehlerberichte"
 
-#. Page title
-#: includes/Plugin.php:274 includes/Plugin.php:275
-msgid "Reported Issues"
-msgstr "Gemeldete Issues"
-
-#: includes/GitHubIssue.php:164
+#: includes/GitHubIssue.php:183
 #| msgid "There was an error closing the issue!"
 msgid "There was an error closing the bug report!"
 msgstr "Beim Schliessen des Fehlerberichts ist ein Fehler aufgetreten!"
 
-#: includes/GitHubIssue.php:117
-msgid "There was an error creating the issue!"
+#: includes/GitHubIssue.php:122
+#, fuzzy
+#| msgid "There was an error creating the issue!"
+msgid "There was an error creating the bug report!"
 msgstr "Beim Erstellen des Issues ist ein Fehler aufgetreten!"
 
-#: includes/GitHubIssue.php:42
+#: includes/GitHubIssue.php:44
 #| msgid "There was an error with the nonce security check!"
 msgid "There was an error with the security check!"
 msgstr "Bei der Sicherheitsüberprüfung ist ein Fehler aufgetreten!"
 
-#: includes/GitHubIssue.php:79
+#: includes/GitHubIssue.php:84
 msgid "Title must be between 3 and 50 characters!"
 msgstr "Der Titel muss zwischen 3 und 50 Zeichen lang sein!"
 
-#: includes/GitHubIssue.php:98
+#: includes/GitHubIssue.php:103
 msgid "Viewport Size:"
 msgstr "Viewport grösse:"
 
-#: includes/GitHubIssue.php:100
+#: includes/GitHubIssue.php:105
 msgid "WP User Email:"
 msgstr "WP-Benutzer-E-Mail:"
 
-#: includes/GitHubIssue.php:99
+#: includes/GitHubIssue.php:104
 msgid "WP User Username:"
 msgstr "WP-Benutzer Benutzername:"

@@ -119,7 +119,7 @@ class GitHubIssue {
                         // Handle response based on GitHub API result
                         $response = [
                             'status' => $result ? 'success' : 'error',
-                            'message' => $result ? __('Bug report created successfully!', 'codess-github-issue-creator') : __('There was an error creating the issue!', 'codess-github-issue-creator'),
+                            'message' => $result ? __('Bug report created successfully!', 'codess-github-issue-creator') : __('There was an error creating the bug report!', 'codess-github-issue-creator'),
                         ];
                     }
                 }

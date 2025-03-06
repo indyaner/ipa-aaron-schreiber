@@ -40,7 +40,6 @@ class EnqueueAssets {
         // Localize scripts with translation strings
         wp_localize_script('codess-github-issue-creator-scripts', 'codess_github_issue_creator',
             [
-                'confirm_close_message' => __('Are you sure you want to close this issue?', 'codess-github-issue-creator'),
                 'ajax_error' => __('An error occurred while processing your request. Please try again later.', 'codess-github-issue-creator'),
             ]
         );
@@ -72,7 +71,6 @@ class EnqueueAssets {
         // Localize scripts with translation strings
         wp_localize_script('codess-github-issue-creator-admin-scripts', 'codess_github_issue_creator',
             [
-                'confirm_close_message' => __('Are you sure you want to close this issue?', 'codess-github-issue-creator'),
                 'ajax_error' => __('An error occurred while processing your request. Please try again later.', 'codess-github-issue-creator'),
             ]
         );
@@ -80,7 +78,7 @@ class EnqueueAssets {
         // Localize scripts with translation strings
         wp_localize_script('codess-github-issue-creator-admin-scripts', 'codess_github_issue_close',
             [
-                'confirm_close_message' => __('Are you sure you want to close this issue?', 'codess-github-issue-creator'),
+                'confirm_close_message' => __('Are you sure you want to close this bug report?', 'codess-github-issue-creator'),
             ]
         );
 
