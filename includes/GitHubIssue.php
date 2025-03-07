@@ -253,7 +253,7 @@ class GitHubIssue {
                                     <div class="accordion-collapse collapse" aria-labelledby="<?= $heading_id; ?>"
                                          data-bs-parent="#issuesAccordion">
                                         <div class="accordion-body">
-                                            <p class="card-text"><?= esc_html($issue['body']); ?></p>
+                                            <p class="card-text"><?= nl2br(htmlspecialchars($issue['body'])); ?></p>
                                             <button class="btn btn-danger close-issue"
                                                     data-issue-id="<?= esc_attr($issue['number']); ?>">
                                                 <?= __('Close Bug Report', 'codess-github-issue-creator') ?>
