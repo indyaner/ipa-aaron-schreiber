@@ -1,1 +1,8 @@
 // add custom scss styling here
+
+// Displays the button for adding a new issue on mobile
+@media screen and (max-width: 782px) {
+  #wpadminbar li#wp-admin-bar-codess-github-issue-creator-adminbar-btn {
+    display: block;
+  }
+}

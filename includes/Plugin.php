@@ -219,8 +219,8 @@ class Plugin {
             // Add the "Report Issue" menu item to the admin bar
             $admin_bar->add_menu(array(
                 'id' => 'codess-github-issue-creator-adminbar-btn', // Unique ID for the item
-                'title' => __('Report Bug', 'codess-github-issue-creator'), // Displayed title
-                'href' => '#', // No redirect action
+                'title' => '<span class="ab-icon dashicons dashicons-buddicons-replies"></span><span class="ab-label">' . __('Report Bug', 'codess-github-issue-creator') . '</span>', // Display icon and title
+                'href' => '#', // No redirect
                 'meta' => [
                     'title' => __('Report Bug', 'codess-github-issue-creator'), // Title for the tooltip
                     'class' => 'codess-github-issue-creator-adminbar-btn', // Custom class
@@ -257,7 +257,7 @@ class Plugin {
                 'manage_github_api_issues', // Capability
                 'reported-issues', // Menu slug
                 array($git_hub_issue, 'codess_backend_page'), // Callback function
-                'dashicons-list-view', // Menu icon
+                'dashicons-buddicons-replies', // Menu icon
                 300 // Position in the menu
             );
 
