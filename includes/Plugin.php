@@ -73,6 +73,11 @@ class Plugin {
     }
 
 
+    /**
+     * Register posttype hooks
+     *
+     * @return void
+     */
     private function define_post_type_hooks(): void {
         $plugin_post_types = new PostTypes();
 
@@ -80,6 +85,11 @@ class Plugin {
     }
 
 
+    /**
+     * Registers rest hooks
+     *
+     * @return void
+     */
     private function define_rest_hooks(): void {
         $plugin_rest = new Rest();
 

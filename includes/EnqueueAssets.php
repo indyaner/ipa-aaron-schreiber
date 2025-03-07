@@ -33,6 +33,8 @@ class EnqueueAssets {
      * @return void
      */
     public function enqueue_public_assets(): void {
+
+        // Enqueue public styles and scripts
         wp_enqueue_style('codess-github-issue-creator-custom-styles', CODESS_GITHUB_ISSUE_CREATOR_URL . 'assets/css/custom_styles.css', array(), $this->version);
         wp_enqueue_style('codess-github-issue-creator-bootstrap-styles', CODESS_GITHUB_ISSUE_CREATOR_URL . 'assets/css/custom_bootstrap.css', array(), $this->version);
         wp_enqueue_script('codess-github-issue-creator-scripts', CODESS_GITHUB_ISSUE_CREATOR_URL . 'assets/js/issue_create_modal.js', array('jquery'), $this->version, true);
@@ -44,7 +46,7 @@ class EnqueueAssets {
             ]
         );
 
-
+        // Localize scripts for fronten modal ajax
         wp_localize_script('codess-github-issue-creator-scripts', 'modal_ajax', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('modal_report_nonce')
@@ -82,6 +84,7 @@ class EnqueueAssets {
             ]
         );
 
+        // Localize scripts for backend ajax
         wp_localize_script('codess-github-issue-creator-admin-scripts', 'modal_ajax', $localized_data);
         wp_localize_script('codess-github-issue-creator-admin-scripts', 'close_ajax', $localized_data);
     }

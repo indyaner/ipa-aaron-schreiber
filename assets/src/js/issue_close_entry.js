@@ -33,17 +33,16 @@ import 'bootstrap';
                         }
                     },
                     error: function (response) {
-                        // Handle any error response from the AJAX request (e.g., network error)
+                        // Handle any error response from the AJAX request
                         showAlert('error', 'Error: ' + response.responseText); // Display a generic error message
                     }
                 });
             }
         });
 
-        // Function to display alert messages (success, error, or other types)
+        // Function to display alert messages
         function showAlert(type, message) {
-            // For now, simply display the message using the browser's default alert box
-            // This could be replaced with a custom alert/modal in the future if needed
+            // Display an alert
             alert(message);
         }
     });

@@ -2,7 +2,7 @@
 
     // Document ready function to ensure the DOM is fully loaded before any operations
     jQuery(document).ready(function ($) {
-        const modal = $("#codess-issue-modal")[0]; // Use the native DOM element for the modal (not jQuery object)
+        const modal = $("#codess-issue-modal")[0]; // The modal
         const adminBarBtn = $("#wp-admin-bar-codess-github-issue-creator-adminbar-btn"); // Admin bar button
         const issue_view_port_size = document.getElementById("issue_view_port_size"); // Hidden field for viewport size
         const issue_operating_system = document.getElementById("issue_operating_system"); // Hidden field for the OS info
@@ -13,7 +13,7 @@
         // Event listener for the admin bar button, opening the modal and pre-filling some fields
         adminBarBtn.on("click", function (e) {
             e.preventDefault(); // Prevent the default action of the button (navigation)
-            modal.showModal(); // Open the modal using the native method (HTMLDialogElement)
+            modal.showModal(); // Open the modal using the native method (Dialog Element)
 
             // Pre-fill the hidden issue_operating_system field with the user's OS and browser information
             issue_operating_system.value = navigator.userAgent;
@@ -131,7 +131,7 @@
                     }
                 },
                 error: function () {
-                    // Handle AJAX request failure (e.g., network error) by marking the fields as invalid
+                    // Handle AJAX request failure by marking the fields as invalid
                     $(editableFields.join(', ')).addClass('is-invalid');
                     showAlert('error', codess_github_issue_creator.ajax_error); // Display a generic error alert
                 }

@@ -69,6 +69,7 @@ register_deactivation_hook(__FILE__, 'deactivate_codess_github_issue_creator');
  * Begin plugin execution.
  *
  * @return void
+ * @throws Exception
  */
 function run_plugin(): void {
     $plugin = new Plugin();
